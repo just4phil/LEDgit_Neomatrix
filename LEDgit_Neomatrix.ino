@@ -65,7 +65,7 @@
 #define mh					23	// TODO: ausmerzen
 #define MATRIX_WIDTH        22
 #define MATRIX_HEIGHT       23
-#define BRIGHTNESS			5    // Max is 255, 32 is a conservative value to not overload a USB power supply (500mA) for 12x12 pixels.
+#define BRIGHTNESS			15    // Max is 255, 32 is a conservative value to not overload a USB power supply (500mA) for 12x12 pixels.
 
 #define MATRIX_TYPE         HORIZONTAL_ZIGZAG_MATRIX
 #define MATRIX_SIZE         (MATRIX_WIDTH * MATRIX_HEIGHT)
@@ -1996,19 +1996,19 @@ void progFadeOut(unsigned int durationMillis, byte nextPart) {
 	}
 }
 
-void FillLEDsFromPaletteColors(uint8_t colorIndex) {
-
-	for (int i = 0; i < anz_LEDs; i++) {
-		leds[i] = ColorFromPalette(currentPalette, colorIndex, BRIGHTNESS, currentBlending);
-		colorIndex += 3;
+// This function fills the palette with totally random colors.
+void SetupTotallyRandomPalette()
+{
+	for (int i = 0; i < 16; i++) {
+		currentPalette[i] = CHSV(random8(), 255, random8());
 	}
 }
-
 // This function sets up a palette of black and white stripes,
 // using code.  Since the palette is effectively an array of
 // sixteen CRGB colors, the various fill_* functions can be used
 // to set them up.
-void SetupBlackAndWhiteStripedPalette() {
+void SetupBlackAndWhiteStripedPalette()
+{
 	// 'black out' all 16 palette entries...
 	fill_solid(currentPalette, 16, CRGB::Black);
 	// and set every fourth one to white.
@@ -2016,9 +2016,57 @@ void SetupBlackAndWhiteStripedPalette() {
 	currentPalette[4] = CRGB::White;
 	currentPalette[8] = CRGB::White;
 	currentPalette[12] = CRGB::White;
-}
 
-void progPalette(unsigned int durationMillis, uint8_t startIndex, byte nextPart) {
+}
+// This function sets up a palette of purple and green stripes.
+void SetupPurpleAndGreenPalette()
+{
+	CRGB purple = CHSV(HUE_PURPLE, 255, 255);
+	CRGB green = CHSV(HUE_GREEN, 255, 255);
+	CRGB black = CRGB::Black;
+
+	currentPalette = CRGBPalette16(
+		green, green, black, black,
+		purple, purple, black, black,
+		green, green, black, black,
+		purple, purple, black, black);
+}
+// This example shows how to set up a static color palette
+// which is stored in PROGMEM (flash), which is almost always more
+// plentiful than RAM.  A static PROGMEM palette like this
+// takes up 64 bytes of flash.
+const TProgmemPalette16 myRedWhiteBluePalette_p =
+{
+	CRGB::Red,
+	CRGB::Gray, // 'white' is too bright compared to red and blue
+	CRGB::Blue,
+	CRGB::Black,
+
+	CRGB::Red,
+	CRGB::Gray,
+	CRGB::Blue,
+	CRGB::Black,
+
+	CRGB::Red,
+	CRGB::Red,
+	CRGB::Gray,
+	CRGB::Gray,
+	CRGB::Blue,
+	CRGB::Blue,
+	CRGB::Black,
+	CRGB::Black
+};
+
+void FillLEDsFromPaletteColors(uint8_t colorInd)
+{
+	uint8_t brightness = 255;
+
+	for (int i = 0; i < anz_LEDs; i++) {
+		leds[i] = ColorFromPalette(currentPalette, colorInd, brightness, currentBlending);
+		colorInd += 3;
+	}
+}
+void progPalette(unsigned int durationMillis, uint8_t paletteID, byte nextPart) {
 
 	//--- standard-part um dauer und naechstes programm zu speichern ----
 	if (!nextChangeMillisAlreadyCalculated) {
@@ -2029,17 +2077,61 @@ void progPalette(unsigned int durationMillis, uint8_t startIndex, byte nextPart)
 		nextSongPart = nextPart;
 		nextChangeMillisAlreadyCalculated = true;
 
-		SetupTotallyRandomPalette();
-		//SetupBlackAndWhiteStripedPalette();
-		//currentBlending = NOBLEND;
+		// setup palette/Programm
+		switch (paletteID) {
+		case 0:
+			currentPalette = RainbowColors_p;
+			currentBlending = LINEARBLEND;
+			break;
+		case 1:
+			currentPalette = RainbowStripeColors_p;   
+			currentBlending = NOBLEND;
+			break;
+		case 2:
+			currentPalette = RainbowStripeColors_p;   
+			currentBlending = LINEARBLEND;
+			break;
+		case 3:
+			SetupPurpleAndGreenPalette();   
+			currentBlending = LINEARBLEND;
+			break;
+		case 4:
+			SetupTotallyRandomPalette();   
+			currentBlending = LINEARBLEND;
+			break;
+		case 5:
+			SetupBlackAndWhiteStripedPalette();       
+			currentBlending = NOBLEND;
+			break;
+		case 6:
+			SetupBlackAndWhiteStripedPalette();       
+			currentBlending = LINEARBLEND;
+			break;
+		case 7:
+			currentPalette = CloudColors_p;           
+			currentBlending = LINEARBLEND;
+			break;
+		case 8:
+			currentPalette = PartyColors_p;           
+			currentBlending = LINEARBLEND;
+			break;
+		case 9:
+			currentPalette = myRedWhiteBluePalette_p; 
+			currentBlending = NOBLEND;
+			break;
+		case 10:
+			currentPalette = myRedWhiteBluePalette_p; 
+			currentBlending = LINEARBLEND;
+			break;
+		}
 	}
 	//---------------------------------------------------------------------
 
-	//zaehler++;
-	//if (zaehler >= 200000) zaehler = 0;
+	zaehler++;
+	if (zaehler > 1000) zaehler = 0;
+	FillLEDsFromPaletteColors(zaehler);
 
-	FillLEDsFromPaletteColors(0);
-	FastLED.show();
+    FastLED.show();
 }
 
 // TODO: Fix progCLED
@@ -2181,6 +2273,7 @@ void loop() {
 		delay(500);
 	}
 }
+
 //====================================================
 
 void setup() {
@@ -2231,11 +2324,14 @@ void setup() {
 
     interrupts();				// alle Interrupts scharf schalten
 
+	//Setup Palette
 	currentPalette = RainbowColors_p;
 	currentBlending = LINEARBLEND;
-
-    switchToSong(0);
+	
+	//-----------------
+	switchToSong(0);
 }
+
 //====================================================
 
 // interrupt every 25 ms so that fastLED can process uninterrupted (takes about 18 ms)
@@ -2290,7 +2386,6 @@ ISR(TIMER3_COMPA_vect) {
         nextChangeMillisAlreadyCalculated = false; // bool wieder fuer naechstes programm freigeben
     }
 }
-
 //========================================================
 
 void switchToSong(byte song) {
@@ -2375,14 +2470,12 @@ const static char wordYou[] = { "you!" };
 
 String wordArrTooCLose2[] = { wordFeels, wordLike, wordI, wordAm, wordJust, wordToo, wordClose, wordTo, wordLove, wordYou }; // ,'\0'
 
-
-
 void defaultLoop() {
 
 	switch (prog) {
 
 	case 0:
-		progPalette(5000, 0, 2);
+		progPalette(10000, 7, 2);	// paletteID -> 0 - 10
 		//progStern(100000, 900, 2);
 		//progFadeOut(16615, 20);
 		//count_pixels();
@@ -2446,7 +2539,6 @@ void defaultLoop() {
 		break;
 	}
 }
-
 //==============================================
 
 //void defaultLoop() {
@@ -2647,7 +2739,6 @@ void Castle() {
 }
 //==============================================
 
-
 void TooClose() {
 	//FastLED.setBrightness(BRIGHTNESS); // zur sicherheit in jedem loop neu auf default setzen. ggf. kann einzelner fx das überschreiben
 
@@ -2812,45 +2903,5 @@ void Pokerface() {
 //}
 
 
-void ChangePalettePeriodically()
-{
-    uint8_t secondHand = (millis() / 1000) % 60;
-    static uint8_t lastSecond = 99;
+//================================================================
 
-    if (lastSecond != secondHand) {
-        lastSecond = secondHand;
-        if (secondHand == 0) { currentPalette = RainbowColors_p;         currentBlending = LINEARBLEND; }
-        if (secondHand == 10) { currentPalette = RainbowStripeColors_p;   currentBlending = NOBLEND; }
-        if (secondHand == 15) { currentPalette = RainbowStripeColors_p;   currentBlending = LINEARBLEND; }
-        if (secondHand == 20) { SetupPurpleAndGreenPalette();             currentBlending = LINEARBLEND; }
-        if (secondHand == 25) { SetupTotallyRandomPalette();              currentBlending = LINEARBLEND; }
-        if (secondHand == 30) { SetupBlackAndWhiteStripedPalette();       currentBlending = NOBLEND; }
-        if (secondHand == 35) { SetupBlackAndWhiteStripedPalette();       currentBlending = LINEARBLEND; }
-        if (secondHand == 40) { currentPalette = CloudColors_p;           currentBlending = LINEARBLEND; }
-        if (secondHand == 45) { currentPalette = PartyColors_p;           currentBlending = LINEARBLEND; }
-        //if (secondHand == 50) { currentPalette = myRedWhiteBluePalette_p; currentBlending = NOBLEND; }
-        //if (secondHand == 55) { currentPalette = myRedWhiteBluePalette_p; currentBlending = LINEARBLEND; }
-    }
-}
-
-// This function fills the palette with totally random colors.
-void SetupTotallyRandomPalette()
-{
-    for (int i = 0; i < 16; i++) {
-        currentPalette[i] = CHSV(random8(), 255, random8());
-    }
-}
-
-// This function sets up a palette of purple and green stripes.
-void SetupPurpleAndGreenPalette()
-{
-    CRGB purple = CHSV(HUE_PURPLE, 255, 255);
-    CRGB green = CHSV(HUE_GREEN, 255, 255);
-    CRGB black = CRGB::Black;
-
-    currentPalette = CRGBPalette16(
-        green, green, black, black,
-        purple, purple, black, black,
-        green, green, black, black,
-        purple, purple, black, black);
-}
