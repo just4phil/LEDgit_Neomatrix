@@ -1,3 +1,16 @@
+
+
+liegt hier:
+E:\00_DATEN\Arduino\LEDgit_Neomatrix
+
+im smartgit:
+LEDgit_Neomatrix
+
+gesynced auf github:
+https://github.com/just4phil/LEDgit_Neomatrix
+
+=====================================================
+
 wenn man auch LEDMATRIX Backend nutzen will:
 
 neomatrix_config_h:

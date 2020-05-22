@@ -2029,15 +2029,16 @@ void progPalette(unsigned int durationMillis, uint8_t startIndex, byte nextPart)
 		nextSongPart = nextPart;
 		nextChangeMillisAlreadyCalculated = true;
 
-		SetupBlackAndWhiteStripedPalette();
-		currentBlending = NOBLEND;
+		SetupTotallyRandomPalette();
+		//SetupBlackAndWhiteStripedPalette();
+		//currentBlending = NOBLEND;
 	}
 	//---------------------------------------------------------------------
 
-	zaehler++;
-	if (zaehler >= 200000) zaehler = 0;
+	//zaehler++;
+	//if (zaehler >= 200000) zaehler = 0;
 
-	FillLEDsFromPaletteColors(zaehler);
+	FillLEDsFromPaletteColors(0);
 	FastLED.show();
 }
 
