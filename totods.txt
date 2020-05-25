@@ -9,6 +9,16 @@ LEDgit_Neomatrix
 gesynced auf github:
 https://github.com/just4phil/LEDgit_Neomatrix
 
+=======================================================
+
+fixen:
+LEDgit_Neomatrix.ino: 1863:31: error: invalid use of member function 'unsigned int String::length() const' (did you forget the '()' ?)
+
+und dann scrolltext am anfang des songs -> laengen testen (automatische kalkulation!)
+
+
+
+
 =====================================================
 
 wenn man auch LEDMATRIX Backend nutzen will:
