@@ -2320,9 +2320,9 @@ CRGB getMatrixColor(int index) {
 	return col;
 }
 
-void progMatrix(unsigned int durationMillis, byte nextPart) {
+void progMatrixHorizontal(unsigned int durationMillis, byte nextPart) {
 	
-	int offset;
+	int colorIndex, offset, row, i;
 
 	//--- standard-part um dauer und naechstes programm zu speichern ----
 	if (!nextChangeMillisAlreadyCalculated) {
@@ -2342,199 +2342,213 @@ void progMatrix(unsigned int durationMillis, byte nextPart) {
 	if (millisCounterTimer >= 100) {	// ersatz für delay()
 		millisCounterTimer = 0;
 
+		row = 0;
 		offset = 0;
-		int colorIndex0 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex0--;
-			if (colorIndex0 < 2) colorIndex0 = 0;
-			matrix->drawPixel(0, i, getMatrixColor(colorIndex0));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 2;
 		offset = -20;
-		int colorIndex1 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex1--;
-			if (colorIndex1 < 2) colorIndex1 = 0;
-			matrix->drawPixel(2, i, getMatrixColor(colorIndex1));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 4;
 		offset = -15;
-		int colorIndex2 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex2--;
-			if (colorIndex2 < 2) colorIndex2 = 0;
-			matrix->drawPixel(4, i, getMatrixColor(colorIndex2));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 6;
 		offset = -8;
-		int colorIndex3 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex3--;
-			if (colorIndex3 < 2) colorIndex3 = 0;
-			matrix->drawPixel(6, i, getMatrixColor(colorIndex3));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 8;
 		offset = 0;
-		int colorIndex4 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex4--;
-			if (colorIndex4 < 2) colorIndex4 = 0;
-			matrix->drawPixel(8, i, getMatrixColor(colorIndex4));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 10;
 		offset = -14;
-		int colorIndex5 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex5--;
-			if (colorIndex5 < 2) colorIndex5 = 0;
-			matrix->drawPixel(10, i, getMatrixColor(colorIndex5));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 12;
 		offset = -21;
-		int colorIndex6 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex6--;
-			if (colorIndex6 < 2) colorIndex6 = 0;
-			matrix->drawPixel(12, i, getMatrixColor(colorIndex6));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 14;
 		offset = -9;
-		int colorIndex7 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex7--;
-			if (colorIndex7 < 2) colorIndex7 = 0;
-			matrix->drawPixel(14, i, getMatrixColor(colorIndex7));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 16;
 		offset = -1;
-		int colorIndex8 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex8--;
-			if (colorIndex8 < 2) colorIndex8 = 0;
-			matrix->drawPixel(16, i, getMatrixColor(colorIndex8));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 18;
 		offset = -16;
-		int colorIndex9 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex9--;
-			if (colorIndex9 < 2) colorIndex9 = 0;
-			matrix->drawPixel(18, i, getMatrixColor(colorIndex9));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 20;
 		offset = -23;
-		int colorIndex10 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex10--;
-			if (colorIndex10 < 2) colorIndex10 = 0;
-			matrix->drawPixel(20, i, getMatrixColor(colorIndex10));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 22;
 		offset = -11;
-		int colorIndex11 = 16;
-		for (int i = zaehler + offset; i > -1 + offset; i--) {
-			colorIndex11--;
-			if (colorIndex11 < 2) colorIndex11 = 0;
-			matrix->drawPixel(22, i, getMatrixColor(colorIndex11));
+		colorIndex = 16;
+		for (i = zaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 		//--------------------------------------
 
+		row = 1;
 		offset = 0;
-		int colorIndex12 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex12--;
-			if (colorIndex12 < 2) colorIndex12 = 0;
-			matrix->drawPixel(0, i, getMatrixColor(colorIndex12));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 3;
 		offset = -20;
-		int colorIndex13 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex13--;
-			if (colorIndex13 < 2) colorIndex13 = 0;
-			matrix->drawPixel(1, i, getMatrixColor(colorIndex13));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 5;
 		offset = -15;
-		int colorIndex14 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex14--;
-			if (colorIndex14 < 2) colorIndex14 = 0;
-			matrix->drawPixel(3, i, getMatrixColor(colorIndex14));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 7;
 		offset = -8;
-		int colorIndex15 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex15--;
-			if (colorIndex15 < 2) colorIndex15 = 0;
-			matrix->drawPixel(5, i, getMatrixColor(colorIndex15));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 9;
 		offset = 0;
-		int colorIndex16 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex16--;
-			if (colorIndex16 < 2) colorIndex16 = 0;
-			matrix->drawPixel(7, i, getMatrixColor(colorIndex16));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 11;
 		offset = -14;
-		int colorIndex17 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex17--;
-			if (colorIndex17 < 2) colorIndex17 = 0;
-			matrix->drawPixel(9, i, getMatrixColor(colorIndex17));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 13;
 		offset = -21;
-		int colorIndex18 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex18--;
-			if (colorIndex18 < 2) colorIndex18 = 0;
-			matrix->drawPixel(11, i, getMatrixColor(colorIndex18));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 15;
 		offset = -9;
-		int colorIndex19 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex19--;
-			if (colorIndex19 < 2) colorIndex19 = 0;
-			matrix->drawPixel(13, i, getMatrixColor(colorIndex19));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 17;
 		offset = -1;
-		int colorIndex20 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex20--;
-			if (colorIndex20 < 2) colorIndex20 = 0;
-			matrix->drawPixel(15, i, getMatrixColor(colorIndex20));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 19;
 		offset = -16;
-		int colorIndex21 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex21--;
-			if (colorIndex21 < 2) colorIndex21 = 0;
-			matrix->drawPixel(17, i, getMatrixColor(colorIndex21));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
 
+		row = 21;
 		offset = -23;
-		int colorIndex22 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex22--;
-			if (colorIndex22 < 2) colorIndex22 = 0;
-			matrix->drawPixel(19, i, getMatrixColor(colorIndex22));
+		colorIndex = 16;
+		for (i = progMatrixZaehler + offset; i > -1 + offset; i--) {
+			colorIndex--;
+			if (colorIndex < 2) colorIndex = 0;
+			matrix->drawPixel(row, i, getMatrixColor(colorIndex));
 		}
-
-		offset = -11;
-		int colorIndex23 = 16;
-		for (int i = progMatrixZaehler + offset; i > -1 + offset; i--) {
-			colorIndex23--;
-			if (colorIndex23 < 2) colorIndex23 = 0;
-			matrix->drawPixel(21, i, getMatrixColor(colorIndex23));
-		}
-
 		//--------------------------
 
 		FastLED.show();
@@ -2551,6 +2565,263 @@ void progMatrix(unsigned int durationMillis, byte nextPart) {
 	}	
 }
 
+void progMatrixVertical(unsigned int durationMillis, byte nextPart) {
+
+	int colorIndex, offset, row, i;
+	const int colorIndexMin = 2;
+
+	//--- standard-part um dauer und naechstes programm zu speichern ----
+	if (!nextChangeMillisAlreadyCalculated) {
+		FastLED.clear(true);
+		// workaround: die eigentlichen millis werden korrigiert auf die faktische dauer
+		//nextChangeMillis = round((float)durationMillis / (float)5.85f);	// TODO: diesen wert eurieren und anpassen!!
+		nextChangeMillis = durationMillis;
+		nextSongPart = nextPart;
+		nextChangeMillisAlreadyCalculated = true;
+
+		zaehler = 0;
+		progMatrixZaehler = 25; // (rand() % (40 + 1 - 15) + 15);//25;
+		millisCounterTimer = 100;
+	}
+	//---------------------------------------------------------------------
+
+	if (millisCounterTimer >= 100) {	// ersatz für delay()
+		millisCounterTimer = 0;
+
+		// offsets müssen hier + sein!!
+
+		row = 0;
+		offset = 0;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 2;
+		offset = 15;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 4;
+		offset = 7;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 6;
+		offset = 20;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 8;
+		offset = 11;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 10;
+		offset = 4;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 12;
+		offset = 13;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 14;
+		offset = 23;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 16;
+		offset = 7;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 18;
+		offset = 19;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 20;
+		offset = 11;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 22;
+		offset = 5;
+		colorIndex = 16;
+		for (i = 23 - zaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+		////--------------------------------------
+
+		row = 1;
+		offset = 17;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 3;
+		offset = 3;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 5;
+		offset = 11;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 7;
+		offset = 9;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 9;
+		offset = 6;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 11;
+		offset = 19;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 13;
+		offset = 6;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 15;
+		offset = 0;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 17;
+		offset = 8;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 19;
+		offset = 14;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 21;
+		offset = 5;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		row = 23;
+		offset = 20;
+		colorIndex = 16;
+		for (i = 23 - progMatrixZaehler + offset; i < 23 + offset; i++) {
+			colorIndex--;
+			if (colorIndex < 0) colorIndex = 0;
+			matrix->drawPixel(i, row, getMatrixColor(colorIndex));
+		}
+
+		//--------------------------
+
+		FastLED.show();
+
+		zaehler++;
+		if (zaehler > 60) {
+			zaehler = 0; // (rand() % (4 + 1 - 0) + 0); // 0;
+		}
+
+		progMatrixZaehler++;
+		if (progMatrixZaehler > 60) {
+			progMatrixZaehler = 0; // (rand() % (4 + 1 - 0) + 0); // 0;
+		}
+	}
+}
 
 // TODO: Fix progCLED
 //=== progCLED =====================
@@ -2957,7 +3228,8 @@ void defaultLoop() {
 	switch (prog) {
 
 	case 0:
-		progMatrix(60000, 1);
+		progMatrixHorizontal(60000, 1);
+		//progMatrixVertical(60000, 1);
 		//progShowROOTS(60000, 1);
 		//progFastBlingBling(15000, 10, 9); //20s -> 3:13
 		//progShowText("ROOTS", 60000, 1, 13, getRandomColor(), 1);
