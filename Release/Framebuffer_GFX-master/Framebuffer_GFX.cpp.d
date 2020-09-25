@@ -1,7 +1,7 @@
 C:\Users\andre\AppData\Local\Temp\VMBuilds\LEDgit_Neomatrix\teensypp2\Release\Framebuffer_GFX-master\Framebuffer_GFX.cpp.o: \
  E:\00_DATEN\Arduino\libraries\Framebuffer_GFX-master\Framebuffer_GFX.cpp \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\libraries\Adafruit_GFX/Adafruit_GFX.h \
- C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/Arduino.h \
+ C:\Users\andre\AppData\Local\Temp\VMBuilds\LEDgit_Neomatrix\teensypp2\Release/pch/Arduino.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/WProgram.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/wiring.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/binary.h \
@@ -20,6 +20,8 @@ C:\Users\andre\AppData\Local\Temp\VMBuilds\LEDgit_Neomatrix\teensypp2\Release\Fr
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/Stream.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/elapsedMillis.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/Arduino.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/WProgram.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/pins_arduino.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/pins_arduino.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/Print.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\libraries\Adafruit_GFX/gfxfont.h \

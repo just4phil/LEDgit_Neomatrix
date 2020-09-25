@@ -1413,27 +1413,26 @@ void progMatrixScanner(unsigned int durationMillis, byte nextPart) {
 	}
 	//---------------------------------------------------------------------
 
+	FastLED.clear();
+
 	if (!scannerGoesBack) {
 
 		zaehler++;
-		if (zaehler >= 23) scannerGoesBack = true;
-
-		//leds.DrawFilledRectangle(zaehler - 1, 0, zaehler + 2, MATRIX_HEIGHT, CRGB::Red);
-		//leds.DrawFilledRectangle(zaehler, 0, zaehler + 1, MATRIX_HEIGHT, CRGB::White);
-		//leds.DrawFilledRectangle(zaehler - 5, 0, zaehler - 2, MATRIX_HEIGHT, CRGB::Black);
-		matrix->fillRect(zaehler - 1, 0, zaehler + 2, MATRIX_HEIGHT, LED_RED_HIGH);
-		matrix->fillRect(zaehler, 0, zaehler + 1, MATRIX_HEIGHT, LED_WHITE_HIGH);
-		matrix->fillRect(zaehler - 5, 0, zaehler - 2, MATRIX_HEIGHT, LED_BLACK);
-		FastLED.show();
+		if (zaehler >= 28) scannerGoesBack = true;
+		
+		matrix->drawLine(zaehler + 0, 0, zaehler + 0, MATRIX_HEIGHT, LED_RED_HIGH);
+		matrix->drawLine(zaehler - 1, 0, zaehler - 1, MATRIX_HEIGHT, CRGB::White);
+		matrix->drawLine(zaehler - 2, 0, zaehler - 2, MATRIX_HEIGHT, LED_RED_HIGH);
 	}
 	else {
 		zaehler--;
-		if (zaehler <= -3) scannerGoesBack = false;
+		if (zaehler <= -6) scannerGoesBack = false;
 
-		matrix->fillRect(zaehler, 0, zaehler + 2, MATRIX_HEIGHT, LED_RED_HIGH);
-		matrix->fillRect(zaehler + 2, 0, zaehler + 4, MATRIX_HEIGHT, LED_BLACK);
-		FastLED.show();
+		matrix->drawLine(zaehler + 0, 0, zaehler + 0, MATRIX_HEIGHT, CRGB::White);
+		matrix->drawLine(zaehler - 1, 0, zaehler - 1, MATRIX_HEIGHT, LED_RED_HIGH);
+		matrix->drawLine(zaehler - 2, 0, zaehler - 2, MATRIX_HEIGHT, CRGB::White);
 	}
+	FastLED.show();
 }
 
 void progStern(unsigned int durationMillis, byte nextPart) {
@@ -1959,11 +1958,11 @@ void progShowROOTS(unsigned int durationMillis, byte nextPart) {
 		matrix->setTextColor(getRandomColor());
 		matrix->print("o");
 
-		matrix->setCursor(9, 14);
+		matrix->setCursor(10, 14);
 		matrix->setTextColor(getRandomColor());
 		matrix->print("T");
 
-		matrix->setCursor(14, 13);
+		matrix->setCursor(15, 13);
 		matrix->setTextColor(getRandomColor());
 		matrix->print("s");
 
@@ -2161,8 +2160,21 @@ extern const TProgmemRGBPalette16 MatrixColors_p PROGMEM =
 //		255, 0, 0, 0;			/* at index 255, white(255,255,255) */
 //};
 
-void FillLEDsFromPaletteColors(uint8_t colorInd)
-{
+void FillLEDsFromPaletteColors(uint8_t colorInd) {
+
+	//0 rainbow slow
+	//1 rainbow fast (ohne fades)
+	//2 rainbow fast (mit fades)
+	//3 lila/grün Fast mit fades
+	//4 blau/lila/rot/orange mit fades Fast
+	//5 white fast ohne fades
+	//6 white fast mit fades
+	//7 blau/weiss slow mit fades
+	//8 blau/lila/rot/orange mit fades slow
+	//9 weiss/blau/beige fast ohne fades (interessante farben)
+	//10 weiss/blau/beige fast mit fades (interessante farben)
+	//11 weiss/grün fast mit fades
+
 	uint8_t brightness = 255;
 
 	for (int i = 0; i < anz_LEDs; i++) {
@@ -2171,6 +2183,19 @@ void FillLEDsFromPaletteColors(uint8_t colorInd)
 	}
 }
 void progPalette(unsigned int durationMillis, uint8_t paletteID, byte nextPart) {
+
+//0 rainbow slow
+//1 rainbow fast (ohne fades)
+//2 rainbow fast (mit fades)
+//3 lila/grün Fast mit fades
+//4 blau/lila/rot/orange mit fades Fast
+//5 white fast ohne fades
+//6 white fast mit fades
+//7 blau/weiss slow mit fades
+//8 blau/lila/rot/orange mit fades slow
+//9 weiss/blau/beige fast ohne fades (interessante farben)
+//10 weiss/blau/beige fast mit fades (interessante farben)
+//11 weiss/grün fast mit fades
 
 	//--- standard-part um dauer und naechstes programm zu speichern ----
 	if (!nextChangeMillisAlreadyCalculated) {
@@ -2926,6 +2951,7 @@ void loop() {
 	if (voltageSmooth > 102) {	// only fire LEDs if voltage is > 10.2V
 
 		checkIncomingMIDI();
+		//checkIncomingMIDITEST(); // macht nur einfache ausgabe der midi commands
 
 		//=== ab hier wird nur alle 25 ms ausgefuehrt ======
 		if (flag_processFastLED) {	// LED loop only in certain time-slots to make ms-counter more accurate
@@ -2976,7 +3002,21 @@ void loop() {
 				ShouldntStop();
 				break;
 			case 14:
+				SunAlwaysShinesOnTV();
+				break;
+			case 15:
+				peopleArePeople();
+				break;
+			case 16:
+				enjoyTheSilence();
+				break;
+
+			case 20:
 				TEMPLATE();
+				break;
+
+			default:
+				defaultLoop();
 				break;
 			}
 			flag_processFastLED = false;
@@ -3098,43 +3138,41 @@ ISR(TIMER3_COMPA_vect) {
 		//PORTD ^= 0x40;
     }
 
-    if (millisCounterForProgChange >= nextChangeMillis) {
-        prog = nextSongPart;
-		millisCounterTimer = 0;
-        millisCounterForProgChange = 0;
-        zaehler = 0;	// globalen zaehler auf null
-		progScrollTextZaehler = MATRIX_WIDTH + 1;
-        nextChangeMillisAlreadyCalculated = false; // bool wieder fuer naechstes programm freigeben
-    }
+	if (millisCounterForProgChange >= nextChangeMillis) switchToPart(nextSongPart);
 }
 //========================================================
 
 void switchToSong(byte song) {
 
-	millisCounterTimer = 0;
-    millisCounterForProgChange = 0;
-    //lastTimestamp = millis();
-
-    //--- initializeValues ---
-    progBlingBlingColoring_rounds = 0;
-    progCLED_hue = 0;
-    progCLED_counter = 0;
-
-    zaehler = 0;	// globalen zaehler auf null
-
     //--- start song ----
     songID = song;
-    prog = 0;
-    nextChangeMillisAlreadyCalculated = false;	// bool wieder fuer naechstes programm freigeben
+    Serial.print("switched to song: ");
+	Serial.println(song);
 
-    //FastLED.clear(true); // TODO: brauchen wir das????
+	switchToPart(0);
+}
 
-    Serial.println("switched program");
+void switchToPart(byte part) {
+
+	prog = part;
+	nextChangeMillisAlreadyCalculated = false;	// bool wieder fuer naechstes programm freigeben
+	millisCounterTimer = 0;
+	millisCounterForProgChange = 0;
+	zaehler = 0;	// globalen zaehler auf null
+	progScrollTextZaehler = MATRIX_WIDTH + 1;
+
+	//--- initializeValues ---
+	progBlingBlingColoring_rounds = 0;
+	progCLED_hue = 0;
+	progCLED_counter = 0;
+
+	Serial.print("switched to part: ");
+	Serial.println(part);
 }
 
 void checkIncomingMIDI() {
 
-	boolean debug = true;
+	boolean debug = false;
 
 	do {
 		if (Serial1.available()) {
@@ -3162,7 +3200,7 @@ void checkIncomingMIDI() {
 						Serial.print("\t");
 						Serial.println(midiDataByte2);
 					}
-
+					// with midi byte 22 the song can be changed!
 					if (midiStatusByte == 185 && midiDataByte1 == 22 && midiDataByte2 > 0) {
 						switchToSong(midiDataByte2);
 						if (debug) {
@@ -3170,8 +3208,27 @@ void checkIncomingMIDI() {
 							Serial.println(midiDataByte2);
 						}
 					}
+					// with midi byte 23 the songpart can be changed!
+					else if (midiStatusByte == 185 && midiDataByte1 == 23 && midiDataByte2 >= 0) {
+						switchToPart(midiDataByte2);
+						if (debug) {
+							Serial.print("switch to part: ");
+							Serial.println(midiDataByte2);
+						}
+					}
 				}
 			}
+		}
+	} while (Serial1.available());
+}
+
+void checkIncomingMIDITEST() {
+	//Serial.println("check");
+	do {
+		if (Serial1.available()) {
+			incomingMidiByte = Serial1.read(); //read first byte
+			Serial.println(incomingMidiByte);
+			Serial.println("check");
 		}
 	} while (Serial1.available());
 }
@@ -3223,19 +3280,34 @@ String wordArrCastle[] = { castle_w1, castle_w2, castle_w3, castle_w4, castle_w5
 //	}
 //}
 
+//#0
 void defaultLoop() {
 
 	switch (prog) {
 
 	case 0:
-		progMatrixHorizontal(60000, 1);
-		//progMatrixVertical(60000, 1);
+		//progScrollText("Nerds on Fire", 30000, 90, getRandomColor(), 5);
+
+		progMatrixScanner(55000, 5);
+		//progMatrixHorizontal(60000, 1);
 		//progShowROOTS(60000, 1);
 		//progFastBlingBling(15000, 10, 9); //20s -> 3:13
 		//progShowText("ROOTS", 60000, 1, 13, getRandomColor(), 1);
 		//progScrollText("Pokerface by Lady Gaga", 60000, 60, getRandomColor(), 1);
 		//progScrollText("Phil", 60000, 30, getRandomColor(), 1);
-		//progPalette(10000, 11, 2);	// paletteID -> 0 - 10
+		//progPalette(10000, 11, 2);	// paletteID -> 0 - 11
+			//0 rainbow slow
+			//1 rainbow fast (ohne fades)
+			//2 rainbow fast (mit fades)
+			//3 lila/grün Fast mit fades
+			//4 blau/lila/rot/orange mit fades Fast
+			//5 white fast ohne fades
+			//6 white fast mit fades
+			//7 blau/weiss slow mit fades
+			//8 blau/lila/rot/orange mit fades slow
+			//9 weiss/blau/beige fast ohne fades (interessante farben)
+			//10 weiss/blau/beige fast mit fades (interessante farben)
+			//11 weiss/grün fast mit fades
 		//progStern(100000, 900, 2);
 		//progFadeOut(16615, 20);
 		//count_pixels();
@@ -3247,52 +3319,56 @@ void defaultLoop() {
 		//progBlingBlingColoring(60000, 1);//3    59,5hz
 		break;
 
-	case 1:
-		progStern(15000, 4000, 2);
+	case 5:
+		progMatrixVertical(30000, 10);
 		break;
 
-	case 2:	// random farbiger strobo
-		progStrobo(5000, 3, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 10:	
+		progStern(15000, 2000, 15);
 		break;
 
-	case 3:
-		progScrollText("Nerds on Fire", 30000, 90, getRandomColor(), 4);
+	case 15:// random farbiger strobo
+		progStrobo(5000, 20, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		//progBlingBlingColoring(10000, 1);//3    59,5hz
 		//progCLED(10000, 4);	// matrix colors
 		break;
 
-	case 4:
-		progMatrixScanner(15000, 5);
+	case 20:
+		progMatrixScanner(15000, 25);
 		break;
 
-	case 5:
-		progFullColors(15000, 6, 2000);
+	case 25:
+		progFullColors(15000, 30, 2000);
 		break;
 
-	case 6:
-		progStrobo(5000, 7, 50, 255, 255, 255);	// Weisser strobo
+	case 30:
+		progStrobo(5000, 35, 50, 255, 255, 255);	// Weisser strobo
 		break;
 
-	case 7:
-		progCircles(15000, 8, 1000);
+	case 35:
+		progCircles(15000, 40, 1000);
 		break;
 
-	case 8:
-		progFastBlingBling(15000, 5, 9); //20s -> 3:13
+	case 40:
+		progFastBlingBling(15000, 5, 45); //20s -> 3:13
 		break;
 
-	case 9:
-		progOutline(10000, 10);
+	case 45:
+		progOutline(10000, 50);
 		break;
 
-	case 10:
-		progMovingLines(10000, 11);
+	case 50:
+		progMovingLines(10000, 55);
 		break;
 
-	case 11:
-		progRandomLines(15000, 100, 500);
+	case 55:
+		progRandomLines(15000, 60, 500);
 		break;
-
+	
+	case 60:
+		progBlingBlingColoring(60000, 100);//3    59,5hz
+		break;
+		
 	case 100:
 		FastLED.clear();
 		switchToSong(0);	// SongID 0 == DEFAULT loop
@@ -3300,7 +3376,7 @@ void defaultLoop() {
 	}
 }
 //==============================================
-
+//#1
 void LearnToFly() {
 
 	switch (prog) {
@@ -3363,7 +3439,7 @@ void LearnToFly() {
 		break;
 	}
 }
-
+//#2
 void Castle() {	//TODO: weiter mit letztem chorus ...fastbling eher ans ende
 
 	switch (prog) {
@@ -3471,7 +3547,7 @@ void Castle() {	//TODO: weiter mit letztem chorus ...fastbling eher ans ende
 		break;
 	}
 }
-
+//#3
 void TooClose() {
 	//FastLED.setBrightness(BRIGHTNESS); // zur sicherheit in jedem loop neu auf default setzen. ggf. kann einzelner fx das überschreiben
 
@@ -3540,7 +3616,7 @@ void TooClose() {
 		break;
 	}
 }
-
+//#4
 void Pokerface() {
 
 	switch (prog) {
@@ -3632,7 +3708,7 @@ void Pokerface() {
 		break;
 	}
 }
-
+//#5
 void UseSomebody() {
 
 	switch (prog) {
@@ -3716,7 +3792,7 @@ void UseSomebody() {
 		break;
 	}
 }
-
+//#6
 void NoRoots() {
 
 	switch (prog) {
@@ -3726,7 +3802,6 @@ void NoRoots() {
 		break;
 
 	case 1://intro1		8276
-		//progBlingBlingColoring(12414, 2);
 		progPalette(8275, 7, 2);	// paletteID -> 0 - 10
 		break;
 
@@ -3736,40 +3811,50 @@ void NoRoots() {
 		break;
 
 	case 5:// verse 1b		16552
-		progCircles(16550, 10, 525);
+		progCircles(16550, 6, 500);
 		break;
 
-	case 10://bridge		8276
-		progMovingLines(7750, 11);
+	case 6://bridge		7759
+		progMovingLines(7750, 7);
 		break;
 
-	case 11://chorus a		8276
-		//progShowText("ROOTS", 1550, 1, 13, getRandomColor(), 12);
-		progShowROOTS(1550, 12);
+	case 7://ROOTS 1	1550	1552
+		progShowROOTS(1550, 8);
 		break;
 
-	case 12://chorus a		8276
-		progFullColors(2575, 13, 525);
+	case 8://chorus a	2575	2586
+		progFullColors(2575, 9, 500);
 		break;
 
-	case 13://chorus a		8276
-		//progShowText("ROOTS", 1550, 1, 13, getRandomColor(), 15);
+	case 9://ROOTS 2	1550	1552
+		progShowROOTS(1550, 10);
+		break;
+
+	case 10://chorus a	3100	3103
+		progFullColors(3100, 11, 500);
+		break;
+
+	case 11://chorus rooooots		7759
+		progStrobo(7750, 12, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		break;
+
+	case 12://ROOTS 1	1550	1552
+		progShowROOTS(1550, 13);
+		break;
+
+	case 13://chorus a	2575	2586
+		progFullColors(2575, 14, 500);
+		break;
+
+	case 14://ROOTS 2	1550	1552
 		progShowROOTS(1550, 15);
 		break;
 
-	case 15://chorus a		8276
-		progFullColors(3100, 16, 525);
+	case 15://chorus a	3100	3103
+		progFullColors(3100, 18, 500);
 		break;
 
-	case 16://chorus b		8276
-		progStrobo(8275, 17, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
-		break;
-
-	case 17://chorus c		8276
-		progFullColors(8275, 18, 525);
-		break;
-	
-	case 18://chorus d		8276
+	case 18://chorus rooooots		8276
 		progStrobo(8275, 20, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
@@ -3778,62 +3863,83 @@ void NoRoots() {
 		break;
 
 	case 25://verse 2b		16552
-		progCircles(16550, 30, 525);
+		progCircles(16550, 27, 500);
 		break;
 
-	case 30://bridge		8276
+	case 27://bridge		7759
 		//progMovingLines(8276, 35);
-		progPalette(8275, 4, 34);	// paletteID -> 0 - 10
+		progPalette(7750, 4, 29);	// paletteID -> 0 - 10
 		break;
 
-	case 34://chorus a		8276
-		progFullColors(8275, 35, 525);
+	case 29://ROOTS 1	1550	1552
+		progShowROOTS(1550, 31);
 		break;
 
-	case 35://chorus b		8276
-		progStrobo(8275, 36, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 31://chorus a	2575	2586
+		progFullColors(2575, 33, 500);
 		break;
 
-	case 36://chorus c		8276
-		progFullColors(8275, 37, 525);
+	case 33://ROOTS 2	1550	1552
+		progShowROOTS(1550, 35);
 		break;
 
-	case 37://chorus d		8276
-		progStrobo(8275, 40, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 35://chorus a	3100	3103
+		progFullColors(3100, 37, 500);
 		break;
 
-	case 40://zwischenspiel		18621
-		//progStrobo(18621, 45, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
-		progPalette(18600, 2, 45);	// paletteID -> 0 - 10
-		//progMatrixScanner(18621, 40);
+	case 37://chorus rooooots		7759
+		progStrobo(7750, 39, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 45://solo		16552
-		progMatrixScanner(16550, 47);
-		//progBlack(16552, 50);
+	case 39://ROOTS 1	1550	1552
+		progShowROOTS(1550, 41);
 		break;
 
-	case 47://chorus a		8276
+	case 41://chorus a	2575	2586
+		progFullColors(2575, 43, 500);
+		break;
+
+	case 43://ROOTS 2	1550	1552
+		progShowROOTS(1550, 45);
+		break;
+
+	case 45://chorus a	3100	3103
+		progFullColors(3100, 47, 500);
+		break;
+
+	case 47://chorus rooooots		8276
+		progStrobo(8275, 49, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		break;
+
+	case 49://zwischenspiel		18621
+		//progPalette(18600, 2, 51);	// paletteID -> 0 - 10
+		progMatrixHorizontal(18600, 51);
+		break;
+
+	case 51://solo		16552
+		progMatrixScanner(16550, 53);
+		break;
+
+	case 53://chorus		8276
 		//progFullColors(8276, 48, 525);
-		progStern(8275, 525, 48);
+		progStern(8275, 500, 55);
 		break;
 
-	case 48://chorus b		8276
-		//progStrobo(8276, 49, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
-		progFastBlingBling(8275, 7, 49);
+	case 55://chorus		8276
+		progFastBlingBling(8275, 7, 57);
 		break;
 
-	case 49://chorus c		8276
+	case 57://chorus		8276
 		//progFullColors(8276, 50, 525);
-		progStern(8275, 250, 50);
+		progStern(8275, 250, 59);
 		break;
 
-	case 50://chorus d		8276
+	case 59://chorus		7759
 		//progStrobo(8276, 70, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
-		progFastBlingBling(8250, 12, 70);
+		progFastBlingBling(7759, 12, 61);
 		break;
 
-	case 70://ende schwarz
+	case 61://ende		10000
 		//progBlack(10000, 100);
 		//progShowText("ROOTS", 30000, 2, 13, getRandomColor(), 100);
 		progShowROOTS(30000, 100);
@@ -3845,89 +3951,114 @@ void NoRoots() {
 		break;
 	}
 }
-
+//#7
 void Firework() {
 
 	switch (prog) {
 
-	case 0://Text	15630
-		progScrollText("Firework by Katey Perry", 15630, 75, getRandomColor(), 1);
+	case 0://text		7500
+		progScrollText("Firework by Katey Perry", 7500, 50, getRandomColor(), 5);
 		break;
 
-	case 1://intro1	8067
-		//progBlingBlingColoring(24202, 5);
-		progPalette(8067, 3, 2);	// paletteID -> 0 - 10
+	case 5:// intro1		15484
+		progStern(15475, 950, 10); 
+		break;
+	//----------------------------------
+
+	case 10://verse 1a		15484
+		progCircles(15475, 15, 475);
 		break;
 
-	case 2://intro2	8067
-		progPalette(8067, 4, 5);	// paletteID -> 0 - 10
-		//progMatrixScanner(24202, 5);
+	case 15://verse 1b		15484
+		progFullColors(15475, 20, 475);
 		break;
 
-		//case 3://verse	16134
-		//	progPalette(8067, 8, 5);	// paletteID -> 0 - 10
-		//	//progMatrixScanner(24202, 5);
-		//	break;
-
-	case 5:// verse	16134
-		progCircles(16134, 10, 500);
+	case 20://bridge		13548
+		progPalette(13550, 4, 22);	// paletteID -> 0 - 10
 		break;
 
-	case 10://reggea	16134
-		progMovingLines(16134, 15);
+	case 22://übergang		1935
+		progStrobo(1925, 24, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		//progCircles(2125, 30, 500);
 		break;
 
-	case 15://pre chorus	16134
-		progFullColors(16134, 20, 500);
+	case 24://chorus 1		14516
+		progFastBlingBling(14500, 3, 26);
 		break;
 
-	case 20://chorus	16134
-		progStrobo(16134, 25, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 26://übergang		968
+		progStrobo(1000, 28, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 25://verse 2	16134
-		progCircles(16134, 30, 500);
+	case 28://chorus 2		15445
+		progFastBlingBling(15450, 7, 30);
+		break;
+		//----------------------------------
+
+	case 30://verse 1a		15484
+		progFullColors(15475, 32, 475);
 		break;
 
-	case 30://reggea	16134
-		//progMovingLines(16134, 35);
-		progPalette(16134, 4, 35);	// paletteID -> 0 - 10
+	case 32://verse 1b		15484
+		progCircles(15475, 34, 475);
 		break;
 
-	case 35://pre chorus	16134
-		progFullColors(16134, 40, 500);
-		//progCircles(14769, 40, 450);
+	case 34://bridge		15484
+		progPalette(13550, 5, 35);	// paletteID -> 0 - 10
 		break;
 
-	case 40://chorus	16134
-		progStrobo(16134, 45, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
-		//progMatrixScanner(29538, 40);
+	case 35://übergang		1935
+		progStrobo(1925, 36, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		//progCircles(2125, 30, 500);
 		break;
 
-	case 45://pause	8067
-		progMatrixScanner(8050, 50);
-		//progBlack(12923, 50);
+	case 36://chorus 1		14516
+		progFastBlingBling(14500, 3, 37);
 		break;
 
-	case 50://gaga	16134
-		progFastBlingBling(16125, 7, 55);
-		//progWordArray(wordArrCastle, 6, 325, 1846, getRandomColor(), 55);
+	case 37://übergang		968
+		progStrobo(1000, 38, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 55://pre chorus	16134
-		progFullColors(16134, 60, 500);
-		//progRandomLines(16134, 56, 450);
+	case 38://chorus 2		15445
+		progFastBlingBling(15450, 7, 40);
+		break;
+		//----------------------------------
+
+	case 40://BRIDGE		15484
+		progPalette(15475, 2, 42);	// paletteID -> 0 - 10
 		break;
 
-	case 60://chorus	12101
-		progStrobo(12100, 65, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 42://pause		14516
+		progMatrixHorizontal(14500, 44);
+		//progBlingBlingColoring(14500, 44);
+		break;
+		//----------------------------------
+
+	case 44://übergang		1935
+		progStrobo(1000, 46, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		//progCircles(2125, 30, 500);
 		break;
 
-	case 65://chorus	4034
-		progFastBlingBling(4025, 12, 70);
+	case 46://chorus 1		14516
+		progFastBlingBling(14500, 5, 48);
 		break;
 
-	case 70://ende schwarz
+	case 48://übergang		968
+		progStrobo(1000, 50, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		break;
+
+	case 50://chorus 2		15445
+		progFastBlingBling(14500, 10, 55);
+		break;
+		//----------------------------------
+
+	case 55://übergang		968
+		progStrobo(1000, 60, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		break;
+		//----------------------------------
+
+	case 60://ende schwarz
 		progBlack(10000, 100);
 		break;
 
@@ -3937,7 +4068,7 @@ void Firework() {
 		break;
 	}
 }
-
+//#8
 void Diamonds() {
 
 	switch (prog) {
@@ -4029,7 +4160,7 @@ void Diamonds() {
 		break;
 	}
 }
-
+//#9
 void SetFire() {
 
 	switch (prog) {
@@ -4121,7 +4252,7 @@ void SetFire() {
 		break;
 	}
 }
-
+//#10
 void Chandelier() {
 
 	switch (prog) {
@@ -4213,7 +4344,7 @@ void Chandelier() {
 		break;
 	}
 }
-
+//#11
 void Titanium() {
 
 	switch (prog) {
@@ -4305,7 +4436,7 @@ void Titanium() {
 		break;
 	}
 }
-
+//#12
 void SomeoneYouLoved() {
 
 	switch (prog) {
@@ -4397,7 +4528,7 @@ void SomeoneYouLoved() {
 		break;
 	}
 }
-
+//#13
 void ShouldntStop() {
 
 	switch (prog) {
@@ -4489,6 +4620,322 @@ void ShouldntStop() {
 		break;
 	}
 }
+//#14
+void SunAlwaysShinesOnTV() {
+
+	switch (prog) {
+
+	case 0:
+		progScrollText("Nerds on Fire", 30000, 90, getRandomColor(), 5);
+		//progMatrixHorizontal(60000, 1);
+		//progShowROOTS(60000, 1);
+		//progFastBlingBling(15000, 10, 9); //20s -> 3:13
+		//progShowText("ROOTS", 60000, 1, 13, getRandomColor(), 1);
+		//progScrollText("Pokerface by Lady Gaga", 60000, 60, getRandomColor(), 1);
+		//progScrollText("Phil", 60000, 30, getRandomColor(), 1);
+		//progPalette(10000, 11, 2);	// paletteID -> 0 - 10
+		//progStern(100000, 900, 2);
+		//progFadeOut(16615, 20);
+		//count_pixels();
+		//progWordArray(wordArrTooCLose2, 10, 570, 5714, getRandomColor(), 5);
+		//progScrollText("Nerds on Fire", 10000, getRandomColor(), 4);
+		//display_panOrBounceBitmap(8);	// 8: smiley panning around
+		//display_bitmap(4, getRandomColor());
+		//display_rgbBitmap(10); // cool: 5, 8, 9, 10
+		//progBlingBlingColoring(60000, 1);//3    59,5hz
+		break;
+
+	case 5:
+		progMatrixVertical(30000, 10);
+		break;
+
+	case 10:
+		progStern(15000, 2000, 15);
+		break;
+
+	case 15:// random farbiger strobo
+		progStrobo(5000, 20, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		//progBlingBlingColoring(10000, 1);//3    59,5hz
+		//progCLED(10000, 4);	// matrix colors
+		break;
+
+	case 20:
+		progMatrixScanner(15000, 25);
+		break;
+
+	case 25:
+		progFullColors(15000, 30, 2000);
+		break;
+
+	case 30:
+		progStrobo(5000, 35, 50, 255, 255, 255);	// Weisser strobo
+		break;
+
+	case 35:
+		progCircles(15000, 40, 1000);
+		break;
+
+	case 40:
+		progFastBlingBling(15000, 5, 45); //20s -> 3:13
+		break;
+
+	case 45:
+		progOutline(10000, 50);
+		break;
+
+	case 50:
+		progMovingLines(10000, 55);
+		break;
+
+	case 55:
+		progRandomLines(15000, 60, 500);
+		break;
+
+	case 60:
+		progBlingBlingColoring(60000, 100);//3    59,5hz
+		break;
+
+	case 100:
+		FastLED.clear();
+		switchToSong(0);	// SongID 0 == DEFAULT loop
+		break;
+	}
+}
+//#15
+void peopleArePeople() {
+
+	switch (prog) {
+
+	case 0:
+		progScrollText("Nerds on Fire", 30000, 90, getRandomColor(), 5);
+		//progMatrixHorizontal(60000, 1);
+		//progShowROOTS(60000, 1);
+		//progFastBlingBling(15000, 10, 9); //20s -> 3:13
+		//progShowText("ROOTS", 60000, 1, 13, getRandomColor(), 1);
+		//progScrollText("Pokerface by Lady Gaga", 60000, 60, getRandomColor(), 1);
+		//progScrollText("Phil", 60000, 30, getRandomColor(), 1);
+		//progPalette(10000, 11, 2);	// paletteID -> 0 - 10
+		//progStern(100000, 900, 2);
+		//progFadeOut(16615, 20);
+		//count_pixels();
+		//progWordArray(wordArrTooCLose2, 10, 570, 5714, getRandomColor(), 5);
+		//progScrollText("Nerds on Fire", 10000, getRandomColor(), 4);
+		//display_panOrBounceBitmap(8);	// 8: smiley panning around
+		//display_bitmap(4, getRandomColor());
+		//display_rgbBitmap(10); // cool: 5, 8, 9, 10
+		//progBlingBlingColoring(60000, 1);//3    59,5hz
+		break;
+
+	case 5:
+		progMatrixVertical(30000, 10);
+		break;
+
+	case 10:
+		progStern(15000, 2000, 15);
+		break;
+
+	case 15:// random farbiger strobo
+		progStrobo(5000, 20, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		//progBlingBlingColoring(10000, 1);//3    59,5hz
+		//progCLED(10000, 4);	// matrix colors
+		break;
+
+	case 20:
+		progMatrixScanner(15000, 25);
+		break;
+
+	case 25:
+		progFullColors(15000, 30, 2000);
+		break;
+
+	case 30:
+		progStrobo(5000, 35, 50, 255, 255, 255);	// Weisser strobo
+		break;
+
+	case 35:
+		progCircles(15000, 40, 1000);
+		break;
+
+	case 40:
+		progFastBlingBling(15000, 5, 45); //20s -> 3:13
+		break;
+
+	case 45:
+		progOutline(10000, 50);
+		break;
+
+	case 50:
+		progMovingLines(10000, 55);
+		break;
+
+	case 55:
+		progRandomLines(15000, 60, 500);
+		break;
+
+	case 60:
+		progBlingBlingColoring(60000, 100);//3    59,5hz
+		break;
+
+	case 100:
+		FastLED.clear();
+		switchToSong(0);	// SongID 0 == DEFAULT loop
+		break;
+	}
+}
+//#16
+void enjoyTheSilence() {
+
+	switch (prog) {
+
+	case 0:
+		progScrollText("Enjoy the silence by Depeche Mode", 21775, 90, getRandomColor(), 5);
+		//progMatrixHorizontal(60000, 1);
+		//progShowROOTS(60000, 1);
+		//progFastBlingBling(15000, 10, 9); //20s -> 3:13
+		//progShowText("ROOTS", 60000, 1, 13, getRandomColor(), 1);
+		//progScrollText("Pokerface by Lady Gaga", 60000, 60, getRandomColor(), 1);
+		//progScrollText("Phil", 60000, 30, getRandomColor(), 1);
+		//progPalette(10000, 11, 2);	// paletteID -> 0 - 10
+		//progStern(100000, 900, 2);
+		//progFadeOut(16615, 20);
+		//count_pixels();
+		//progWordArray(wordArrTooCLose2, 10, 570, 5714, getRandomColor(), 5);
+		//progScrollText("Nerds on Fire", 10000, getRandomColor(), 4);
+		//display_panOrBounceBitmap(8);	// 8: smiley panning around
+		//display_bitmap(4, getRandomColor());
+		//display_rgbBitmap(10); // cool: 5, 8, 9, 10
+		//progBlingBlingColoring(60000, 1);//3    59,5hz
+		//progMatrixVertical(30000, 10);
+		//progStern(15000, 2000, 15);
+		break;
+
+	case 5:
+		progPalette(8500, 11, 10);	// paletteID -> 0 - 10
+		break;
+
+	case 10:
+		progPalette(8500, 3, 15);	// paletteID -> 0 - 10
+		break;
+
+	case 15:// random farbiger strobo
+		progFullColors(8500, 20, 1050);
+		break;
+
+	case 20:
+		progStrobo(7950, 25, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		break;
+
+	case 25:
+		progBlack(525, 30);
+		break;
+
+	case 30:
+		progMovingLines(2125, 35);
+		break;
+
+	case 35:
+		progFastBlingBling(17000, 5, 40); //20s -> 3:13
+		break;
+
+	case 40:
+		progPalette(8500, 2, 45);
+		break;
+
+	case 45:
+		progPalette(8500, 3, 50);	// paletteID -> 0 - 10
+		break;
+
+	case 50:
+		progFullColors(8496, 55, 1050);
+		break;
+
+	case 55:
+		progStrobo(8496, 60, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		break;
+
+	case 60:
+		progScrollText("1  2  3  4", 2125, 25, getRandomColor(), 65);
+		break;
+
+	case 65: //enjoy the silence
+		progFastBlingBling(8490, 2, 70); //20s -> 3:13
+		break;
+	
+	case 70: //enjoy the silence
+		progFastBlingBling(8490, 4, 75); //20s -> 3:13
+		break;
+
+	case 75: //enjoy the silence
+		progPalette(16991, 9, 80);	// paletteID -> 0 - 11
+		//0 rainbow slow
+		//1 rainbow fast (ohne fades)
+		//2 rainbow fast (mit fades)
+		//3 lila/grün Fast mit fades
+		//4 blau/lila/rot/orange mit fades Fast
+		//5 white fast ohne fades
+		//6 white fast mit fades
+		//7 blau/weiss slow mit fades
+		//8 blau/lila/rot/orange mit fades slow
+		//9 weiss/blau/beige fast ohne fades (interessante farben)
+		//10 weiss/blau/beige fast mit fades (interessante farben)
+		//11 weiss/grün fast mit fades
+		break;
+
+	case 80:// random farbiger strobo
+		progFullColors(8500, 85, 1050);
+		break;
+
+	case 85:
+		progStrobo(8500, 90, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		break;
+
+	case 90:// random farbiger strobo
+		progFullColors(8500, 95, 1050);
+		break;
+
+	case 95:
+		progStrobo(8500, 100, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		break;
+
+	case 100:
+		progScrollText("1  2  3  4", 2125, 25, getRandomColor(), 105);
+		break;
+
+	case 105: //enjoy the silence
+		progFastBlingBling(8490, 1, 110); //20s -> 3:13
+		break;
+
+	case 110: //enjoy the silence
+		progFastBlingBling(8490, 2, 115); //20s -> 3:13
+		break;
+
+	case 115: //enjoy the silence
+		progFastBlingBling(8490, 3, 120); //20s -> 3:13
+		break;
+
+	case 120: //enjoy the silence
+		progFastBlingBling(8490, 4, 125); //20s -> 3:13
+		break;
+
+	case 125: //enjoy the silence
+		progFastBlingBling(8490, 5, 130); //20s -> 3:13
+		break;
+
+	case 130: //enjoy the silence
+		progFastBlingBling(8490, 6, 135); //20s -> 3:13
+		break;
+
+	case 135: //enjoy the silence
+		progBlack(50000, 200); //20s -> 3:13
+		break;
+
+	case 200:
+		FastLED.clear();
+		switchToSong(0);	// SongID 0 == DEFAULT loop
+		break;
+	}
+}
+//==============================================,
 
 void TEMPLATE() {
 

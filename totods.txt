@@ -38,3 +38,10 @@ LEDgit_Neomatrix.ino:
 		raus: matrix = new FastLED_NeoMatrix(leds, mw, mh, NEO_MATRIX_TOP + NEO_MATRIX_RIGHT + NEO_MATRIX_ROWS + NEO_MATRIX_ZIGZAG);
 			//error: redefinition of 'FastLED_NeoMatrix* matrix
 			//neomatrix_config.h:185: note  FastLED_NeoMatrix* matrix previously declared here
+
+===============================================
+
+features:
+
+20.09.2020:
+mit midi 23 + songPart kann man jetzt auch mitten im song einen spezifischen part starten
