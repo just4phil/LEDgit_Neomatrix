@@ -1,7 +1,7 @@
 C:\Users\andre\AppData\Local\Temp\VMBuilds\LEDgit_Neomatrix\teensypp2\Release\SPI\SPI.cpp.o: \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\libraries\SPI\SPI.cpp \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\libraries\SPI\SPI.h \
- C:\Users\andre\AppData\Local\Temp\VMBuilds\LEDgit_Neomatrix\teensypp2\Release/pch/Arduino.h \
+ C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/Arduino.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/WProgram.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/wiring.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/binary.h \
@@ -20,6 +20,5 @@ C:\Users\andre\AppData\Local\Temp\VMBuilds\LEDgit_Neomatrix\teensypp2\Release\SP
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/Stream.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/elapsedMillis.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/Arduino.h \
- C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/WProgram.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/pins_arduino.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\teensy\avr\cores\teensy/pins_arduino.h
