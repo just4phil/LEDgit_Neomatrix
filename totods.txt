@@ -122,6 +122,8 @@ und dann scrolltext am anfang des songs -> laengen testen (automatische kalkulat
 
 TODO
 =====
+04.05.2021: ALLE SONGS SO MACHEN WIE THE SUN ALWAYS ... (perfektes Timing)
+	abweichung von akkum. millis berücksichtigen!!
 - default preset sollte gechillt sein (ohne strobo)
 
 pokerface

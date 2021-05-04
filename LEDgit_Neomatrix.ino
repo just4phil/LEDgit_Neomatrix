@@ -3070,6 +3070,7 @@ void loop() {
 			case 18:
 				prisoner();
 				break;
+
 			case 20:
 				TEMPLATE();
 				break;
@@ -3149,7 +3150,7 @@ void setup() {
 	currentBlending = LINEARBLEND;
 	
 	//-----------------
-	switchToSong(14);  // TODO: set back to 0 !!!!
+	switchToSong(15);  // TODO: set back to 0 !!!!
 }
 
 //====================================================
@@ -3363,6 +3364,7 @@ String wordArrCastle[] = { castle_w1, castle_w2, castle_w3, castle_w4, castle_w5
 //	}
 //}
 
+
 //#0
 void defaultLoop()  {
 
@@ -3374,7 +3376,7 @@ void defaultLoop()  {
 		
 		//progFastBlingBling(20000, 1, 5, 1, 30, 2000);
 
-		progScrollText("Nerds on Fire", 30000, 90, getRandomColor(), 5);		 
+		progScrollText("Nerds on Fire", 19500, 90, getRandomColor(), 5);		 
 		
 		//progMatrixScanner(55000, 5);
 		//progMatrixHorizontal(60000, 1);
@@ -3408,7 +3410,7 @@ void defaultLoop()  {
 		break;
 
 	case 5:
-		progMatrixVertical(30000, 10);
+		progMatrixHorizontal(30000, 10);
 		break;
 
 	case 10:	
@@ -4741,171 +4743,172 @@ void ShouldntStop() {
 	}
 }
 
-//#14 -> FERTIG: 03.05.2021
+//#14 -> FERTIG: 03.05.2021 +  4.5.21 -> zeitplan perfektioniert!!!!!!
 void SunAlwaysShinesOnTV() {
 
 	switch (prog) {
 
-	case 0: // scrolltext	126	16905
+	case 0: // scrolltext	126	16900
 		progScrollText("The sun always shines on TV by a-ha", 16900, 75, getRandomColor(), 2);
 		break;
 
-	case 2: // BLACK	126	5238
-		progBlack(5238, 4);
+	case 2: // BLACK	126	5250
+		progBlack(5250, 4);
 		//progFullColors(1900, 10, 2000);
 		break;
 
-	case 4: // touch	126	952
+	case 4: // touch	126	950
 		progShowText("Touch", 950, 0, 13, getRandomColor(), 6);
 		break;
 
-	case 6:// me	126	952
+	case 6:// me	126	950
 		progShowText("Me", 950, 6, 13, getRandomColor(), 8);
 		break;
 
-	case 8: // intro: how can it be	126	13333
+	case 8: // intro: how can it be	126	13325
 		progCircles(13325, 10, 1900, true);
 		break;
 
-	case 10: // hold	126	1905
+	case 10: // hold	126	1900
 		progShowText("Hold", 1900, 0, 13, getRandomColor(), 12);
 		break;
 
-	case 12: // me	126	1905
-		progShowText("Me", 1900, 6, 13, getRandomColor(), 14);
+	case 12: // me	126	1925
+		progShowText("Me", 1925, 6, 13, getRandomColor(), 14);
 		break;
 
-	case 14: // intro: sun alway shines	126	13333
+	case 14: // intro: sun alway shines	126	13325
 		progCircles(13325, 16, 1900, false);
 		break;
 
-	case 16: // Steigerung	126	15238
+	case 16: // Steigerung	126	15225
 		progFastBlingBling(15225, 1, 18, 1, 100, 2000);
 		break;
 
-	case 18: // vorspiel	126	7619
-		progFullColors(7619, 20, 475);
+	case 18: // vorspiel	126	7625
+		progFullColors(7625, 20, 475);
 		break;
 
-	case 20: // melody lick	126	15238
-		progRandomLines(15225, 22, 475, false);
+	case 20: // melody lick	126	15250
+		progRandomLines(15250, 22, 475, false);
 		break;
 
-	case 22: // verse 1	126	30476
+	case 22: // verse 1	126	30475
 		progBlingBlingColoring(30475, 24, 5000);//3    59,5hz
 		break;
 
-	case 24: // touch	126	952
+	case 24: // touch	126	950
 		progShowText("Touch", 950, 0, 13, getRandomColor(), 26);
 		break;
 
-	case 26:// me	126	952
+	case 26:// me	126	950
 		progShowText("Me", 950, 6, 13, getRandomColor(), 28);
 		break;
 
-	case 28:// ch1: strobo	126	5238
-		progStrobo(5225, 30, 300, 255, 255, 255);
+	case 28:// ch1: strobo	126	5250
+		progStrobo(5250, 30, 250, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 30:// BLACK	126	2381
-		progBlack(2381, 32);
+	case 30:// BLACK	126	2375
+		progBlack(2375, 32);
 		break;
 
-	case 32:// chorus:stern	126	13333
+	case 32:// chorus:stern	126	13325
 		progStern(13325, 475, 34);
 		break;
 
-	case 34:// strobo fast	126	3810
+	case 34:// strobo fast	126	3800
 		progStrobo(3800, 36, 75, 255, 255, 255);
 		break;
 
-	case 36:// full colors	126	3810
-		progFullColors(3800, 38, 475);
+	case 36:// full colors	126	3825
+		progFullColors(3825, 38, 475);
 		break;
 
-	case 38: // melody lick	126	7619
+	case 38: // melody lick	126	7625
 		progRandomLines(7625, 40, 475, false);
 		break;
 
-	case 40: // verse 2	126	30476
+	case 40: // verse 2	126	30475
 		progBlingBlingColoring(30475, 42, 5000);//3    59,5hz
 		break;
 
-	case 42: // touch	126	952
+	case 42: // touch	126	950
 		progShowText("Touch", 950, 0, 13, getRandomColor(), 44);
 		break;
 
-	case 44:// me	126	952
+	case 44:// me	126	950
 		progShowText("Me", 950, 6, 13, getRandomColor(), 46);
 		break;
 
-	case 46:// ch1: strobo	126	5238
-		progStrobo(5238, 48, 300, 255, 255, 255);
+	case 46:// ch1: strobo	126	5225
+		progStrobo(5225, 48, 250, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		//progStrobo(5225, 48, 300, 255, 255, 255);
 		break;
 
-	case 48:// BLACK	126	2381
-		progBlack(2381, 50);
+	case 48:// BLACK	126	2400
+		progBlack(2400, 50);
 		break;
 
-	case 50:// chorus:stern	126	13333
-		progStern(13333, 475, 52);
+	case 50:// chorus:stern	126	13325
+		progStern(13325, 475, 52);
 		break;
 
-	case 52:// strobo fast	126	3810
+	case 52:// strobo fast	126	3800
 		progStrobo(3800, 54, 75, 255, 255, 255);
 		break;
 
-	case 54:// full colors	126	3810
-		progFullColors(3800, 56, 475);
+	case 54:// full colors	126	3825
+		progFullColors(3825, 56, 475);
 		break;
 
-	case 56: // pre-Solo	126	11429
+	case 56: // pre-Solo	126	11425
 		progMatrixScanner(11425, 58);
 		break;
 		
-	case 58:// SOLO	126	13333
+	case 58:// SOLO	126	13325
 		progFastBlingBling(13325, 1, 60, 1, 100, 2000);
 		break;
 
-	case 60:// TREMOLO	126	1905
+	case 60:// TREMOLO	126	1900
 		progStrobo(1900, 62, 50, 255, 255, 255);
 		break;
 
-	case 62:// halfTime	126	3810
-		progFullColors(3800, 64, 950);
+	case 62:// halfTime	126	3825
+		progFullColors(3825, 64, 950);
 		break;
 
-	case 64:// chorus:stern	126	2857
+	case 64:// chorus:stern	126	2850
 		progStern(2850, 475, 66);
 		break;
 
-	case 66:// TREMOLO	126	952
+	case 66:// TREMOLO	126	950
 		progStrobo(950, 68, 50, 255, 255, 255);
 		break;
 
-	case 68:// chorus:stern	126	10476
+	case 68:// chorus:stern	126	10475
 		progStern(10475, 475, 70);
 		break;
 
-	case 70:// TREMOLO	126	952
+	case 70:// TREMOLO	126	950
 		progStrobo(950, 72, 50, 255, 255, 255);
 		break;
 
-	case 72:// 	126	14286
-		progStern(14286, 475, 74);
+	case 72:// 	126	14300
+		progStern(14300, 475, 74);
 		break;
 
-	case 74:// 	126	952
+	case 74:// 	126	950
 		progStrobo(950, 76, 50, 255, 255, 255);
 		break;
 
-	case 76:// BLACK	126	7619
-		progBlack(7619, 100);
+	case 76:// BLACK	126	7625
+		progBlack(7500, 100);
 		break;
 
 	case 100:
 		FastLED.clear();
-		switchToSong(0);	// SongID 0 == DEFAULT loop
+		switchToSong(0);	// SongID 0 == DEFAULT loop 
 		break;
 	}
 }
