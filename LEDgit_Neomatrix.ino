@@ -1430,7 +1430,6 @@ void progStrobo(unsigned int durationMillis, byte nextPart, unsigned int del, in
 
 //TODO: Fixen
 
-
 void progMatrixScanner(unsigned int durationMillis, byte nextPart) {
 	progMatrixScanner(durationMillis, nextPart, 0);
 }
@@ -2899,6 +2898,16 @@ void progMatrixVertical(unsigned int durationMillis, byte nextPart) {
 		if (progMatrixZaehler > 60) {
 			progMatrixZaehler = 0; // (rand() % (4 + 1 - 0) + 0); // 0;
 		}
+	}
+}
+
+void progGoTo(byte nextPart) {
+
+	//--- standard-part um dauer und naechstes programm zu speichern ----
+	if (!nextChangeMillisAlreadyCalculated) {
+		nextChangeMillis = 0;
+		nextSongPart = nextPart;
+		nextChangeMillisAlreadyCalculated = true;
 	}
 }
 
@@ -4918,66 +4927,147 @@ void peopleArePeople() {
 
 	switch (prog) {
 
-	case 0:
-		progBlack(8000, 2);
+	case 0: // 0	scrolltext	21500
+		progScrollText("People are people by Depeche Mode", 21500, 90, getRandomColor(), 2);
+		//progBlack(8000, 2);
 		break;
 
-	case 2:
-		progScrollText("People are people by Depeche Mode", 21750, 90, getRandomColor(), 5);
+	case 2: // intro	17750	scanner
+		progMatrixScanner(17750, 4);
 		break;
 
-	case 5:
-		progMatrixVertical(10000, 10);
+	case 4: // chorus 1	15250
+		progFullColors(15250, 5, 250);
 		break;
 
-	case 10:
-		progStern(15250, 2000, 15);
+	case 5: // bam bam FX	750
+		progStrobo(750, 6, 125, 255, 255, 255);
 		break;
 
-	case 15:// random farbiger strobo
-		progStrobo(1250, 20, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 6: // 3er übergang	3250
+		progStern(3250, 1000, 7);
 		break;
 
-	case 20:
-		progMovingLines(2750, 25);
+	case 7: // bam bam FX	750
+		progStrobo(750, 8, 125, 255, 255, 255);
+		break;
+
+	case 8: // 3er übergang	2000
+		progStern(2000, 1000, 9);
+		break;
+
+	case 9:// verse 1	16000
+		progCircles(16000, 10, 500);
+		//progStrobo(16000, 10, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		break;
+
+	case 10: // i cant understand…	6000
+		progMovingLines(6000, 12);
 		//progMatrixScanner(15000, 25);
 		break;
 
-	case 25:
-		progStrobo(750, 27, 150, 255, 255, 255);	// Weisser strobo
+	case 12: // bam bam FX	500
+		progStrobo(500, 14, 125, 255, 255, 255);	// Weisser strobo
 		//progFullColors(15000, 30, 2000);
 		break;
 
-	case 27:
-		progBlack(1250, 30);
+	case 14: // black	500
+		progBlack(500, 16);
 		break;
 
-	case 30:
-		progStrobo(750, 35, 50, 255, 255, 255);
+	case 16: // snarewirbel	1000
+		progStrobo(1000, 18, 50, 255, 255, 255);
 		break;
 
-	case 35:
-		progCircles(16000, 40, 1000);
+	case 18: // chorus 2	15250
+		progCircles(15250, 20, 500);
 		break;
 
-	case 40:
-		progFastBlingBling(15000, 5, 45); //20s -> 3:13
+	case 20: // bam bam FX	750
+		//progStrobo(750, 22, 125, 255, 255, 255);
+		progStrobo(750, 32, 125, getRandomColorValue(), 255, getRandomColorValue());
 		break;
 
-	case 45:
-		progOutline(10000, 50);
+	case 22: // 3er übergang	6000
+		progOutline(10000, 24);
 		break;
 
-	case 50:
-		progMovingLines(10000, 55);
+	case 24: // help me understand	22000
+		progBlingBlingColoring(22000, 26, 2000);
+		//progMovingLines(22000, 26);
 		break;
 
-	case 55:
-		progRandomLines(15000, 60, 500);
+	case 26: // verse 2	16000
+		progRandomLines(16000, 28, 500);
 		break;
 
-	case 60:
-		progBlingBlingColoring(60000, 55, 7625);//3    59,5hz
+	case 28: // i cant understand…	6000
+		progMovingLines(6000, 30);
+		break;
+
+	case 30: // bam bam FX	500
+		progStrobo(500, 32, 125, getRandomColorValue(), getRandomColorValue(), 255);
+		break;
+
+	case 32: // black	500
+		progBlack(500, 34);
+		break;
+
+	case 34: // snarewirbel	1000
+		progStrobo(1000, 36, 50, 255, 255, 255);
+		break;
+
+	case 36: // chorus 2	16000
+		progStern(16000, 1000, 38);
+		break;
+
+	case 38: // übergang	3250
+		progMatrixScanner(3250, 40);
+		//progOutline(3250, 40);
+		break;
+
+	case 40: // bam bam FX	750
+		progStrobo(750, 42, 125, getRandomColorValue(), getRandomColorValue(), 255);
+		break;
+
+	case 42: // i cant understand…	8000
+		progMovingLines(8000, 44);
+		break;
+
+	case 44: // bam bam FX	500
+		progStrobo(500, 46, 125, getRandomColorValue(), getRandomColorValue(), 255);
+		break;
+
+	case 46: // i cant understand…	7500
+		progRandomLines(7500, 48, 500, true);
+		break;
+
+	case 48: // bam bam FX	500
+		progStrobo(500, 50, 125, getRandomColorValue(), getRandomColorValue(), 255);
+		break;
+
+	case 50: // black	500
+		progBlack(500, 52);
+		break;
+
+	case 52: // snarewirbel	1000
+		progStrobo(1000, 54, 50, 255, 255, 255);
+		break;
+
+	case 54: // chorus 3	16000
+		progFullColors(16000, 56, 250);
+		break;
+
+	case 56: // chorus 4	15000
+		progFastBlingBling(15000, 1, 58, 1, 100, 1500);
+		break;
+
+	case 58: // snarewirbel	1000
+		progStrobo(1000, 60, 50, 255, 255, 255);
+		break;
+
+	case 60: // BLACK	10000
+		progBlack(10000, 100);
 		break;
 
 	case 100:
