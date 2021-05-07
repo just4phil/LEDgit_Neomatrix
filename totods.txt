@@ -55,7 +55,7 @@ progPalette
 7 blau/weiss slow mit fades
 8 blau/lila/rot/orange mit fades slow
 9 weiss/blau/beige fast ohne fades (interessante farben)
-10 weiss/blau/beige fast mit fades (interessante farben)
+10 kurze grüne streifen 
 11 weiss/grün fast mit fades
 
 =========================================
