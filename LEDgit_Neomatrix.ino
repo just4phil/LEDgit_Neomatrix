@@ -5444,20 +5444,21 @@ void prisoner() {
 		//progMatrixScanner(17750, 4);
 		break;
 
-	case 4: // v1a: i dont wanna be	10200
-		progBlack(4700, 6);
+	case 4: // black	2825
+		progBlack(2825, 6);
 		//progFullColors(10200, 6, 250); 
 		//progPalette(10200, 7, 6);
 		break;
 
-	case 6: // v1b: i dont wanna be	10225
-		progPalette(10225, 3, 8);
+	case 6: // auftakt	1875
+		progMovingLines(1875, 8);
 		//progStrobo(10225, 8, 125, 255, 255, 255);
 		break;
 
-	case 8: // ah…the sun is blinding	10200
+	case 8: // 
 		//progStern(10200, 1000, 10);
-		progCircles(10200, 10, 650, false);
+		progPalette(10225, 3, 8);
+		//progCircles(10200, 10, 650, false);
 		break;
 
 	case 10: // oh.. Im finding	9575 
@@ -5637,7 +5638,7 @@ void prisoner() {
 		break;
 
 	case 82: // BLACK	10000
-		progBlack(10000, 100);
+		progBlack(10000, 0);  // TODO: auf 100 SETZEN !!!!!!!!!!!!!!!!!!!!!!!
 		break;
 
 	case 100:
