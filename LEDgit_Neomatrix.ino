@@ -5441,204 +5441,103 @@ void prisoner() {
 
 	case 2: //  text	15925
 		progScrollText("Prisoner by Miley Cyrus ", 15925, 90, getRandomColor(), 4);
-		//progMatrixScanner(17750, 4);
 		break;
 
 	case 4: // black	2825
 		progBlack(2825, 6);
-		//progFullColors(10200, 6, 250); 
-		//progPalette(10200, 7, 6);
 		break;
 
 	case 6: // auftakt	1875
 		progMovingLines(1875, 8);
-		//progStrobo(10225, 8, 125, 255, 255, 255);
 		break;
 
-	case 8: // 
-		//progStern(10200, 1000, 10);
-		progPalette(10225, 3, 8);
-		//progCircles(10200, 10, 650, false);
+	case 8: // v1: strung out on a ceiling	7500 
+		progRandomLines(7500, 10, 475, false);
 		break;
 
-	case 10: // oh.. Im finding	9575 
-		progRandomLines(9575, 11, 650, false);
+	case 10: // 10	oh i cant control it 	7500
+		progStern(7500, 475, 12);
 		break;
 
-	case 11:// fx 650
-		progStrobo(650, 12, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 12:// 12	i try to replace it	7500
+		progCircles(7500, 14, 475);
 		break;
 
-	case 12: // chorus 1a	10200
-		progFullColors(10200, 14, 650);
-		//progStern(10200, 650, 14);
+	case 14:// 14	oh i cant control it 	7500
+		progStern(7500, 475, 16);
 		break;
 
-
-		//TODO: hier noch @1877,75 und @1881,75 einen FX einbauen??
-
-
-	case 14:// chorus 1b	10225
-		progStern(10225, 650, 16);
-		//progCircles(10225, 16, 500);
-		//progStrobo(16000, 10, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
-		break;
-
-	case 16: // verse 2a	2550
-		progPalette(2550, 7, 18);
+	case 16: // 16	u keep making it hard	11250
+		progPalette(11250, 7, 18);
 		//progMovingLines(6000, 12);
 		break;
 
-	case 18: // silence	2550
-		progBlack(2550, 20);	// Weisser strobo
-		//progFullColors(15000, 30, 2000);
+	case 18: // 18	Chorus 1 a	14050
+		progFullColors(14050, 20, 225);
 		break;
 
-	case 20: // verse 2a	5100
-		progPalette(5100, 3, 22);
+	case 20: // 20	fx	950
+		progStrobo(950, 22, 50, 255, 255, 255);
 		break;
 
-	case 22: // verse 2b	10225
-		progPalette(10225, 4, 24);
-		//progCircles(10225, 24, 650); // auch cool
-		//progRandomLines(1000, 18, 50);
-		//progStrobo(1000, 18, 50, 255, 255, 255);
+	case 22: // 22	Chorus 1 b	14050
+		progCircles(14050, 24, 225); // auch cool
 		break;
 
-	case 24: // ah…the night is calling	10200
-		progCircles(10200, 26, 650, false);
+	case 24: // 24	fx	950
+		progStrobo(950, 26, 75, 255, 255, 255);
 		break;
 
-	case 26: // ah …im falling	7675
-		progRandomLines(7675, 28, 650, false);
+	case 26: // 26	v2: i tasted heaven	7500
+		progRandomLines(7500, 28, 475, false);
 		break;
 
-	case 28: // blaaaaame	1900
-		progPalette(1900, 8, 30);
+	case 28: // 28	oh i cant control it 	7500
+		progStern(7500, 475, 30);
 		break;
 
-	case 30: // snarewirbel	650
-		progStrobo(650, 32, 50, 255, 255, 255);
+	case 30: // 30	u keep making it hard	11250
+		progPalette(11250, 8, 32);
 		break;
 
-	case 32: // chorus 2a	4475
-		//progRandomLines(4475, 34, 500);
-		progFullColors(4475, 34, 650);
+	case 32: // 32	STOP / Vocals	3750
+		progScrollText("Prisoner", 3750, 75, getRandomColor(), 34);
 		break;
 
-	case 34: // fx	625
-		progStrobo(625, 36, 75, 255, 255, 255);
-		//progPalette(6000, 8, 30);
-		//progMatrixHorizontal(6000, 30);
-		//progMovingLines(6000, 30);
+	case 34: // 34	Chorus 2 a	10300
+		progStern(10300, 475, 36);
 		break;
 
-	case 36: // chorus 2a	5100
-		progFullColors(5100, 38, 650);
+	case 36: // 36	fx	950
+		progStrobo(950, 38, 75, 255, 255, 255);
 		break;
 
-	case 38: // chorus 2b	4475
-		progStern(4475, 650, 40);
+	case 38: // 38	Chorus 2 b	14050
+		progFastBlingBling(14050, 4, 40);
 		break;
 
-	case 40: // fx	650
-		progStrobo(650, 42, 50, 255, 255, 255);
+	case 40: // 40	fx	950
+		progStrobo(950, 42, 75, 255, 255, 255);
 		break;
 
-	case 42: // chorus 2b	3825
-		progStern(3825, 650, 44);
+	case 42: // 42	Chorus 3 a	14050
+		progFastBlingBling(14050, 8, 44);
 		break;
 
-	case 44: // begin slide	625
-		progMatrixScanner(625, 46);
+	case 44: // 44	fx	950
+		progStrobo(950, 46, 75, 255, 255, 255);
 		break;
 
-	case 46: // trommelwirbel	650
-		progStrobo(650, 48, 50, getRandomColorValue(), getRandomColorValue(), 255);
+	case 46: // 46	let me go	5625
+		progMatrixScanner(5625, 48);
 		break;
 
-	case 48: // coming down	8925
-		progCircles(8925, 50, 150, true);
-		//progPalette(3250, 8, 40);
-		//progMatrixHorizontal(8925, 50);
-		//progMovingLines(8000, 44);
+	case 48: // 50	TEXT: let me go	2575
+		progScrollText("Let me go", 5500, 75, getRandomColor(), 50);
 		break;
 
-	case 50: // fx	1300
-		progStrobo(1300, 52, 100, getRandomColorValue(), getRandomColorValue(), 255);
-		break;
-
-	case 52: // coming down	10200
-		//progMatrixHorizontal(7500, 48);
-		//progPalette(7500, 8, 48);
-		progRandomLines(10200, 54, 150, true);
-		break;
-
-	case 54: // when its good…	20425
-		progBlingBlingColoring(20425, 56, 2000);
-		//progStrobo(500, 50, 125, getRandomColorValue(), getRandomColorValue(), 255);
-		break;
-
-	case 56: // SOLO	9575
-		progPalette(9575, 6, 58);
-		//progBlack(500, 52);
-		break;
-
-	case 58: // trommelwirbel	650
-		progStrobo(650, 60, 100, 255, 255, 255);
-		//progCircles(1000, 54, 50); // auch cool
-		//progStrobo(1000, 54, 50, 255, 255, 255);
-		break;
-
-	case 60: // chorus 3a	4450
-		progFullColors(4450, 62, 325);
-		break;
-
-	case 62: // fx	650
-		progStrobo(650, 64, 100, 255, 255, 255);
-		break;
-
-	case 64: // chorus 3a	5100
-		progFullColors(5100, 66, 325);
-		break;
-
-	case 66: // chorus 3b	4475
-		progFullColors(4475, 68, 325);
-		break;
-
-	case 68: // fx	625
-		progStrobo(625, 70, 50, 255, 255, 255);
-		break;
-
-	case 70: // chorus 3b	3850
-		progStern(3850, 650, 72);
-		//progFullColors(3850, 72, 325);
-		break;
-
-	case 72: // trommelwirbel	1275
-		progStrobo(1275, 74, 50, 255, 255, 255);
-		break;
-
-	case 74: // coming down	8925
-		//progFullColors(8925, 76, 325);
-		progCircles(8925, 76, 50, true);
-		break;
-
-	case 76: // fx	1275
-		progStrobo(1275, 78, 50, 255, 255, 255);
-		break;
-
-	case 78: // coming down	10225
-		progFastBlingBling(10225, 3, 80, 1, 100, 1500);
-		break;
-
-	case 80: // outro strings	12750
-		progBlingBlingColoring(28000, 26, 2000);
-		//progStrobo(1000, 60, 50, 255, 255, 255);
-		break;
-
-	case 82: // BLACK	10000
-		progBlack(10000, 0);  // TODO: auf 100 SETZEN !!!!!!!!!!!!!!!!!!!!!!!
+	case 50: // 52	BLACK	10000
+		progBlack(10000, 100); 
 		break;
 
 	case 100:
