@@ -3159,7 +3159,7 @@ void setup() {
 	currentBlending = LINEARBLEND;
 	
 	//-----------------
-	switchToSong(18);  // TODO: set back to 0 !!!!
+	switchToSong(0);  // TODO: set back to 0 !!!!
 }
 
 //====================================================
@@ -3475,61 +3475,62 @@ void defaultLoop()  {
 }
 //==============================================
 
-//#1 ... TODO: optimieren
+//#1 ... TODO: 30.05.2021: TODO: strobe am Ende zerlegen in kleinere Teile!
 void LearnToFly() {
 
 	switch (prog) {
 
-	case 0: //text 13676
-		progScrollText("Learn to fly by Foo Fighters", 13676, 75, getRandomColor(), 2);
+	case 0: //0	text	13675
+		progScrollText("Learn to fly by Foo Fighters", 13675, 75, getRandomColor(), 2);
 		break;
 
-	case 2: //intro 7059
-		progStern(7059, 440, 5);
+	case 2: //2	intro	7050
+		progStern(7050, 875, 5);
 		break;
 
-	case 5: //verse 28235
-		progMatrixScanner(28235, 10);
+	case 5: //5	verse	28250
+		progMatrixScanner(28250, 10);
 		break;
 
-	case 10: //chorus 24706
-		progFullColors(24706, 15, 425);
+	case 10: //10	chorus	24700
+		progFullColors(24700, 15, 450);
 		break;
 
-	case 15: // intro2 14118
-		progStern(14118, 20);
+	case 15: //15	intro 2	14125
+		progStern(14125, 875, 20);
 		break;
 
-	case 20: // verse2 28235
-		progRandomLines(28235, 25, 425);
+	case 20: // 20	verse 2	28225
+		progRandomLines(28225, 25, 450);
 		break;
 
-	case 25: //chorus2: 30000
+	case 25: //25	chorus 2	30000
 		progFastBlingBling(30000, 5, 30);
 		break;
 
-	case 30: // leiser part: 28235
-		progBlingBlingColoring(28235, 35, 7625);
+	case 30: //30	leise stelle	28250
+		progBlingBlingColoring(28250, 35, 5000);
 		break;
 
-	case 35: // steigerung 3529
-		progStrobo(3529, 40, 75, 255, 255, 255); // Weisser strobo
+	case 35: //35	steigerung rein	3525
+		progStrobo(3525, 40, 75, 255, 255, 255); // Weisser strobo
 		break;
 
-	case 40: // chorus 3 24706
-		progFullColors(24706, 45, 425);
+	case 40: // 40	chorus 3	24700
+		progFullColors(24700, 45, 450);
 		break;
 
-	case 45: // chorus 4 21176
-		progFastBlingBling(21176, 5, 50);
+	case 45: //45	chorus 4	21175
+		progFastBlingBling(21175, 5, 50);
 		break;
 
-	case 50: // chorus-ende 14118
-		progStrobo(14118, 55, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+		// TODO: Strobo zerlegen in kleinere Teile!!!
+	case 50: //50	abschluss chorus	14125
+		progStrobo(14125, 55, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 55: // outro 17647
-		progBlingBlingColoring(65535, 100, 7625); // 65535 is max for unsigned int!
+	case 55: //55	outro	17650
+		progBlingBlingColoring(25000, 100, 5000); // 65535 is max for unsigned int!
 		break;
 
 	case 100:
@@ -3544,100 +3545,102 @@ void Castle() {	//TODO: weiter mit letztem chorus ...fastbling eher ans ende
 
 	switch (prog) {
 
-	case 0://text	12923
-		progScrollText("Castle by Halsey", 12923, 100, getRandomColor(), 1);
+	case 0://0	text_straight for the castle	11075
+		progScrollText("Castle by Halsey", 11075, 100, getRandomColor(), 1);
 		break;
 
-	case 1://vorspann	7385
-		progBlingBlingColoring(7385, 5, 7625);
+	case 1://1	vorspann	9225
+		progBlingBlingColoring(9225, 5, 3000);
 		break;
 
-	case 5:// intro	7385
-		progCircles(7385, 10, 925);
+	case 5:// 5	intro	22150
+		progCircles(22150, 10, 925);
 		break;
 
-	case 10://verse 1	29538
-		progMatrixScanner(29538, 15);
+	case 10://10	verse 1	14775
+		progMatrixScanner(14775, 15);
 		break;
 
-	case 15://chor 1	16615
-		progBlack(16615, 20);
+	case 15://15	chor 1	16625
+		progBlingBlingColoring(16625, 20, 3000);
+		//progBlack(16615, 20);
 		break;
 
-	case 20://im headed straight for the castle	1846
-		progWordArray(wordArrCastle, 6, 325, 1846, getRandomColor(), 25);
+	case 20://20	im headed straight for the castle	1850
+		progWordArray(wordArrCastle, 6, 325, 1850, getRandomColor(), 25);
 		break;
 
-	case 25://chorus 1	12923
-		progCircles(12923, 30, 450);
+	case 25://25	chorus 1	12925
+		progCircles(12925, 30, 450);
 		break;
 
-	case 30://headed	1846
-		progStrobo(1846, 35, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 30://30	im headed straight for the castle	1825
+		progStrobo(1825, 35, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 35://chorus 1	14769
-		progCircles(14769, 40, 450);
+	case 35://35	chorus 1	14775
+		progCircles(14775, 40, 450);
 		break;
 
-	case 40://verse 2	29538
-		progMatrixScanner(29538, 45);
+	case 40://40	verse 2	29550
+		progMatrixScanner(29550, 45);
 		break;
 
-	case 45://chor 2	12923
-		progBlack(12923, 50);
+	case 45://45	chor 2	12925
+		//progBlack(12925, 50);
+		progBlingBlingColoring(12925, 50, 3000);
 		break;
 
-	case 50://im headed straight for the castle	1846
-		progWordArray(wordArrCastle, 6, 325, 1846, getRandomColor(), 55);
+	case 50://50	im headed straight for the castle	1850
+		progWordArray(wordArrCastle, 6, 325, 1850, getRandomColor(), 55);
 		break;
 
-	case 55://chorus 2	12923
-		//progCircles(12923, 56, 450);
-		progRandomLines(12923, 56, 450);
+	case 55://55	chorus 2	12900
+		//progCircles(12900, 56, 450);
+		progRandomLines(12900, 56, 450);
 		break;
 
-	case 56://headed	1846
-		progStrobo(1846, 58, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 56://56		1850
+		progStrobo(1850, 58, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 58://chorus 2	14769
-		//progCircles(14769, 60, 450);
-		progRandomLines(14769, 60, 450);
+	case 58://58		14775
+		//progCircles(14775, 60, 450);
+		progRandomLines(14775, 60, 450);
 		break;
 
-	case 60://bridge	19846
-		progStern(19846, 1850, 65);
+	case 60://60	bridge	19850
+		progStern(19850, 1850, 65);
 		break;
 
-	case 65://git kreischen 1	3692
-		progStrobo(3692, 70, 50, 255, 255, 255); // Weisser strobo
+	case 65://65	git kreischen 1	3700
+		progStrobo(3700, 70, 50, 255, 255, 255); // Weisser strobo
 		break;
 
-	case 70://git kreischen 2	6000
+	case 70://70	git kreischen 2	6000
 		progStrobo(6000, 75, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 75://bridge weiter voc	14769
-		progStern(14769, 1850, 80);
+	case 75://75	bridge weiter voc	14750
+		progStern(14750, 925, 80);
 		break;
 
-	case 80://schrei	3692
-		//progFastBlingBling(3692, 85);
-		progStrobo(3692, 85, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 80://80	schrei	3700
+		//progFastBlingBling(3700, 85);
+		progStrobo(3700, 85, 50, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 85://chorus 3	29538
-		progFastBlingBling(29538, 5, 90);
-		//progCircles(29538, 90, 450);
+	case 85://85	chorus 3	29550
+		progCircles(29550, 90, 450, false);
+		//progCircles(29550, 90, 450);
 		break;
 
-	case 90://chorus 4	28615
-		//progOutline(28615, 95);
-		progCircles(28615, 95, 450);
+	case 90://90	chorus 4	28600
+		//progOutline(28600, 95);
+		progFastBlingBling(28600, 5, 95);
 		break;
 
-	case 95://text_straight for the castle	13846
+	case 95://95	text_straight for the castle	13850
 		progWordArray(wordArrCastle, 100, 325, 60000, getRandomColor(), 9);
 		break;
 
