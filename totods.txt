@@ -4,6 +4,8 @@ getRandomColor()
 
 progBlack(unsigned int durationMillis, byte nextPart)
 
+setDurationAndNextPart(unsigned int durationMillis, byte nextPart) {
+
 progScrollText(String words, unsigned int durationMillis, int delay, int col, byte nextPart)
 progShowText(String words, unsigned int durationMillis, int pos_x, int pos_y, int col, byte nextPart)
 	progShowROOTS(unsigned int durationMillis, byte nextPart)

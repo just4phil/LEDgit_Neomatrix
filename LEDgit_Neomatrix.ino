@@ -1193,6 +1193,21 @@ int getRandomColorIncludingBlack() {
 	return farbe;
 }
 
+// wird zB fuer ProgDisplayRGB benutzt
+void setDurationAndNextPart(unsigned int durationMillis, byte nextPart) {
+
+	//--- standard-part um dauer und naechstes programm zu speichern ----
+	if (!nextChangeMillisAlreadyCalculated) {
+		FastLED.clear(true);
+		// workaround: die eigentlichen millis werden korrigiert auf die faktische dauer
+		//nextChangeMillis = round((float)durationMillis / (float)1.0f);	// TODO: diesen wert eurieren und anpassen!!
+		nextChangeMillis = durationMillis;
+		nextSongPart = nextPart;
+		nextChangeMillisAlreadyCalculated = true;
+	}
+	//---------------------------------------------------------------------
+}
+
 //==================================================================
 //=========== FX programs ==========================================
 //==================================================================
@@ -3651,67 +3666,71 @@ void Castle() {	//TODO: weiter mit letztem chorus ...fastbling eher ans ende
 	}
 }
 
-//#3 -> checken! -> timing zu spät?
+//#3 -> 08.06.2021 OK!
 void TooClose() {
 	//FastLED.setBrightness(BRIGHTNESS); // zur sicherheit in jedem loop neu auf default setzen. ggf. kann einzelner fx das überschreiben
 
 	switch (prog) {
 
-	case 0: //text 14762
+	case 0: //0	text	11900
 		progScrollText("Too close by Alex Clare", 11905, 75, getRandomColor(), 2);
 		break;
 
-	case 2: // intro
-		progCircles(25714, 5, 950); 		// BPM sollten immer ein vielfaches von 25 sein!
+	case 2: // 2	intro	25725
+		progCircles(25725, 5, 950); 		// BPM sollten immer ein vielfaches von 25 sein!
 		break;
 
-	case 5: // verse 2
+	case 5: // 5	verse 2	45700
 		progRandomLines(45700, 10, 475); 	// BPM sollten immer ein vielfaches von 25 sein!
 		break;
 
-	case 10: // chorus 1
+	case 10: // 10	chorus 1	30475
 		progFullColors(30475, 15, 950); 		// 30476
 		break;
 
-	case 15: // uebergang zu verse 2
-		progCircles(15225, 20, 950); 		// 15238
+	case 15: // 15	uebergang zu verse 2	15250
+		progCircles(15250, 20, 950); 		// 15238
 		break;
 
-	case 20: // verse 2
+	case 20: // 20	verse 2	30475
 		progRandomLines(30475, 25, 475);		// 29025
 		break;
 
-	case 25: // phil alleine
-		progWordArray(wordArrTooCLose2, 10, 475, 5675, getRandomColor(), 30);
+	case 25: // 25	phil alleine	5725 (5675)
+		progWordArray(wordArrTooCLose2, 10, 475, 5725, getRandomColor(), 30);
 		break;
 
-	case 30: // chorus 2
-		progStern(24775, 1900, 35);				// 4558
+	case 30: // 30	chorus 2	24750
+		progStern(24750, 1900, 35);				// 4558
 		break;
 
-	case 35: // hardcore 1
-		progStrobo(15225, 40, 75, 255, 255, 255); // Weisser strobo // 11722
+	case 35: // 35	hardcore 1	15250
+		progStrobo(15250, 40, 75, 255, 255, 255); // Weisser strobo // 11722
 		break;
 
-	case 40: // chorus 3
-		progFullColors(15225, 45, 952);		// 15238
+	case 40: // 40	 chorus 3	15225
+
+		progFullColors(15225, 45, 950);		// 15238
 		break;
 
-	case 45: // halftime
-		//progCLED(7619, 10);					// 3386
-		progFastBlingBling(7600, 5, 50);		// 395
+	case 45: // 45	halftime	7625
+		progFastBlingBling(7625, 5, 50);		// 395
 		break;
 
-	case 50: // chorus weiter
-		progFullColors(7600, 55, 950);		// 7619
+	case 50: // 50	chorus weiter	7625
+		progFullColors(7625, 55, 475);		// 7619
 		break;
 
-	case 55: // hardcore 2
+	case 55: // 55	hardcore 2	7600
 		progStrobo(7600, 60, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue()); // 5861
 		break;
 
-	case 60: // outro
-		progBlingBlingColoring(65535, 100, 7625); // 65535 is max for unsigned int!
+	case 60: // 60	outro	17150
+		progBlingBlingColoring(17150, 65, 7625); // 65535 is max for unsigned int!
+		break;
+
+	case 65: // 60	outro	17150
+		progBlack(10000, 100);
 		break;
 
 	case 100:
@@ -3721,90 +3740,89 @@ void TooClose() {
 	}
 }
 
-//#4 -> todo: anfang scrolltext kommt ein 2. mal / stops einbauen?
+//#4 -> 08.06.2021: OK….. STOPs könnten noch eingebaut werden
 void Pokerface() {
 
 	switch (prog) {
 
-	case 0://Text	15630
-		progScrollText("Pokerface by Lady Gaga", 15630, 75, getRandomColor(), 1);
+	case 0://0	text	11100
+		progScrollText("Pokerface by Lady Gaga", 11100, 75, getRandomColor(), 2);
 		break;
 
-	case 1://intro1	8067
-		//progBlingBlingColoring(24202, 5);
-		progPalette(8067, 3, 2);	// paletteID -> 0 - 10
+	case 2: // 4525
+		progPalette(4525, 4, 4);	// paletteID -> 0 - 10
 		break;
 
-	case 2://intro2	8067
-		progPalette(8067, 4, 5);	// paletteID -> 0 - 10
+	case 4://1	intro1	8075
+		progPalette(8075, 3, 6);	// paletteID -> 0 - 10
+		break;
+
+	case 6://2	intro2	8075
+		progPalette(8075, 2, 8);	// paletteID -> 0 - 10
 		//progMatrixScanner(24202, 5);
 		break;
 
-	//case 3://verse	16134
-	//	progPalette(8067, 8, 5);	// paletteID -> 0 - 10
-	//	//progMatrixScanner(24202, 5);
-	//	break;
-
-	case 5:// verse	16134
-		progCircles(16134, 10, 500);
+	case 8:// 5	verse	16125
+		progCircles(16125, 10, 500);
 		break;
 
-	case 10://reggea	16134
-		display_rgbBitmap(9); // cool: 5, 8, 9, 10 // 9: jamaika-colors
-		//progMovingLines(16134, 15);
+	case 10://10	reggea	16125
+		setDurationAndNextPart(16125, 15);
+		display_rgbBitmap(9);
 		break;
 
-	case 15://pre chorus	16134
-		progFullColors(16134, 20, 500);
+	case 15://15	pre chorus	16150
+		progFullColors(16150, 20, 500);
 		break;
 
-	case 20://chorus	16134
-		progStrobo(16134, 25, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 20://20	chorus	16125
+		progStrobo(16125, 25, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 25://verse 2	16134
-		progCircles(16134, 30, 500);
+	case 25://25	verse 2	16125
+		progCircles(16125, 30, 500);
 		break;
 
-	case 30://reggea	16134
-		//progMovingLines(16134, 35);
-		progPalette(16134, 4, 35);	// paletteID -> 0 - 10
+	case 30://30	reggea	16150
+		setDurationAndNextPart(16125, 35);
+		display_rgbBitmap(9);
+		//progPalette(16150, 4, 35);	// paletteID -> 0 - 10
 		break;
 
-	case 35://pre chorus	16134
-		progFullColors(16134, 40, 500);
+	case 35://35	pre chorus	16125
+		progFullColors(16125, 40, 500);
 		//progCircles(14769, 40, 450);
 		break;
 
-	case 40://chorus	16134
-		progStrobo(16134, 45, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
+	case 40://40	chorus	16150
+		progStrobo(16150, 45, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		//progMatrixScanner(29538, 40);
 		break;
 
-	case 45://pause	8067
+	case 45://45	pause	8050
 		progMatrixScanner(8050, 50);
 		//progBlack(12923, 50);
 		break;
 
-	case 50://gaga	16134
-		progFastBlingBling(16125, 7, 55);
+	case 50://50	gaga	16150
+		progFastBlingBling(16150, 7, 55);
 		//progWordArray(wordArrCastle, 6, 325, 1846, getRandomColor(), 55);
 		break;
 
-	case 55://pre chorus	16134
-		progFullColors(16134, 60, 500);
+	case 55://55	pre chorus	16125
+		progFullColors(16125, 60, 500);
 		//progRandomLines(16134, 56, 450);
 		break;
 
-	case 60://chorus	12101
+	case 60://60	chorus	12100
 		progStrobo(12100, 65, 75, getRandomColorValue(), getRandomColorValue(), getRandomColorValue());
 		break;
 
-	case 65://chorus	4034
+	case 65://65	chorus	4025
 		progFastBlingBling(4025, 12, 70);
 		break;
 
-	case 70://ende schwarz
+	case 70://70	ende schwarz	10000
 		progBlack(10000, 100);
 		break;
 
