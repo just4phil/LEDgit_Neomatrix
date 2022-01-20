@@ -12,7 +12,6 @@
 //#include "bluesmiley24.h"
 #include "smileytongue24.h"
 
-//#include "TooClose.h"
 
 //=============================
 //#define USELEDMATRIXCONFIG
