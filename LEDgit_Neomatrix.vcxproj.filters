@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LEDgit_Neomatrix.ino" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.LEDgit_Neomatrix.vsarduino.h">

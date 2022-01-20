@@ -58,7 +58,6 @@ local.properties
 *.tlb
 *.tli
 *.tlh
-*.tmp
 *.vspscc
 .builds
 *.dotCover
@@ -161,3 +160,10 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+/.vs/LEDgit_Neomatrix/v17/Browse.VC.db
+/.vs/LEDgit_Neomatrix/v17/Browse.VC.db-shm
+/.vs/LEDgit_Neomatrix/v17/Browse.VC.db-wal
+/.vs/LEDgit_Neomatrix/v17/Browse.VC.opendb
+/LEDgit_Neomatrix.vcxproj.filters
+/__vm/.LEDgit_Neomatrix.vsarduino.h
+/__vm/Compile.vmps.xml

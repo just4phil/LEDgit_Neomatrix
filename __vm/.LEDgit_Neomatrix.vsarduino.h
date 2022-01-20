@@ -6,68 +6,94 @@
 			All non-arduino files created by visual micro and all visual studio project or solution files can be freely deleted and are not required to compile a sketch (do not delete your own code!).
 			Note: debugger breakpoints are stored in '.sln' or '.asln' files, knowledge of last uploaded breakpoints is stored in the upload.vmps.xml file. Both files are required to continue a previous debug session without needing to compile and upload again
 	
-	Hardware: Teensy++ 2.0, Platform=teensy, Package=teensy
+	Hardware: Teensy 4.0, Platform=teensy4, Package=teensy
 */
 
 #if defined(_VMICRO_INTELLISENSE)
 
 #ifndef _VSARDUINO_H_
 #define _VSARDUINO_H_
-#define __HARDWARE_at90usb1286__
-#define __HARDWARE_AT90USB1286__
-#define __HARDWARE_AT90usb1286__
-#define TEENSYDUINO 151
-#define ARDUINO_ARCH_AVR
+#define __HARDWARE_imxrt1062__
+#define __HARDWARE_IMXRT1062__
+#define __IMXRT1062__
+#define TEENSYDUINO 156
 #define ARDUINO 108012
-#define ARDUINO_TEENSY2PP
-#define F_CPU 16000000L
+#define ARDUINO_TEENSY40
+#define F_CPU 600000000
 #define USB_SERIAL
-#define LAYOUT_GERMAN
+#define LAYOUT_US_ENGLISH
 #define __cplusplus 201103L
-#define __AVR__
-#define __extension__
+#undef __cplusplus
+#define __cplusplus 201103L
+
+
+#define __arm__
+#define __ARM__
 #define  __attribute__(x)
 typedef void *__builtin_va_list;
-
 #define __extension__
 #define __ATTR_PURE__
 #define __ATTR_CONST__
 #define __inline__
-#define __asm__ 
+#define __asm__(x)
 #define __volatile__
-
 #define NEW_H
-// C:\TESTBED\arduino\ide_1-8-8\hardware\tools\arm\arm-none-eabi\include\sys\types.h
+#undef _WIN32
+#define __STDC__ 
+//#define __GNUC__ 2
+//#define __GNUC_MINOR__ 5
+#define __ARM_ARCH_7EM__
 
-typedef signed char        int8_t;
-typedef short              int16_t;
-typedef int                int32_t;
-typedef long long          int64_t;
-typedef unsigned char      uint8_t;
-typedef unsigned short     uint16_t;
-typedef unsigned int       uint32_t;
-typedef unsigned long long uint64_t;
-typedef unsigned char boolean;
-typedef unsigned char byte;
-typedef unsigned int uint;
+extern int at_quick_exit(void (*f)(void));
+int at_quick_exit(void (*f)(void)) {
+}
+extern int quick_exit(void (*f)(void));
+int quick_exit(void (*f)(void)) {
+}
 
-// Defines all pins from 
-//C:\TESTBED\arduino\ide_1-8-8\hardware\teensy\avr\cores\teensy\pins_arduino.h
-#define __AVR_ATmega32U4__
 
-// C:\TESTBED\arduino\ide_1-8-8\hardware\teensy\avr\cores\teensy\wiring.h
-#define sei()
-#define cli()
-#define interrupts() sei()
-#define noInterrupts() cli()
 
-// C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.21.27702\include\stdint.h
-typedef unsigned char      uint8_t;
+#define __INT64_TYPE__ 8
+#define __INTPTR_TYPE__ 4
+#define __INT32_TYPE__ 4
 
+typedef long intptr_t;
+typedef long __intptr_t;
+typedef unsigned long __uintptr_t;
+typedef long __int32_t;
+typedef unsigned long __uint32_t;
+typedef unsigned short  __uint16_t;
+typedef short __int16_t;
+typedef unsigned short  __uint8_t;
+typedef short __int8_t;
+typedef unsigned long __uint64_t;
+typedef double __int64_t;
+typedef unsigned long uint64_t;
+typedef double int64_t;
+typedef unsigned short uint8_t;
+typedef short int8_t;
+
+typedef unsigned int uint16_t;
+typedef short int16_t;
+typedef long __int32_t;
+typedef unsigned long __uint32_t;
+
+#define at_quick_exit(x)
 
 #include "arduino.h"
-#undef cli
-#define cli()
+#define abs(x) ((x)>0?(x):-(x))
+#define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
+#define round(x)     ((x)>=0?(long)((x)+0.5):(long)((x)-0.5))
+#define radians(deg) ((deg)*DEG_TO_RAD)
+#define degrees(rad) ((rad)*RAD_TO_DEG)
+#define sq(x) ((x)*(x))
+
+#define __asm__
+
+#define __disable_irq() __asm__ volatile("");
+#define __enable_irq()	__asm__ volatile("");
+
+
 #include "LEDgit_Neomatrix.ino"
 #endif
 #endif
